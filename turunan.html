@@ -1,0 +1,3664 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turunan Fungsi Aljabar — Materi Interaktif</title>
+<meta name="description" content="Materi interaktif turunan fungsi aljabar: konsep limit secan ke tangen, 9 aturan turunan, contoh bertahap, penerapan garis singgung dan stasioner, serta kuis 12 soal.">
+<meta name="color-scheme" content="light">
+<style>
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --harbour-blue: #1e3a5f;
+    --harbour-blue-light: #2a4d7a;
+    --reef-teal: #0d7377;
+    --reef-teal-light: #14919b;
+    --outback-gold: #e6a817;
+    --sandstone: #f5f0e8;
+    --sail-white: #fafbfc;
+    --opera-white: #ffffff;
+    --grey-gull: #6b7280;
+    --ocean-ink: #1a2332;
+    --border-soft: #e2e8f0;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --shadow-sm: 0 1px 3px rgba(26, 35, 50, 0.06);
+    --shadow-md: 0 4px 16px rgba(26, 35, 50, 0.08);
+    --shadow-lg: 0 12px 40px rgba(26, 35, 50, 0.10);
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    --max-width: 1120px;
+    --transition: 0.2s ease;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: var(--font-sans);
+    background: var(--sail-white);
+    color: var(--ocean-ink);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+}
+
+h1, h2, h3, h4 { font-weight: 700; line-height: 1.25; color: var(--ocean-ink); letter-spacing: -0.02em; }
+h1 { font-size: 2.6rem; }
+h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+h3 { font-size: 1.18rem; }
+h4 { font-size: 0.98rem; }
+p { margin-bottom: 0.85rem; color: #374151; }
+a { color: var(--reef-teal); text-decoration: none; transition: color var(--transition); }
+a:hover { color: var(--reef-teal-light); }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+/* ===== LAYOUT ===== */
+.container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+.section { padding: 4.25rem 0; }
+.section--alt { background: var(--sandstone); }
+.section--dark { background: var(--harbour-blue); color: #e5e7eb; }
+.section--dark h2, .section--dark h3, .section--dark h4 { color: #ffffff; }
+.section--dark p { color: #cbd5e1; }
+.section-header { max-width: 720px; margin-bottom: 2.5rem; }
+.section-header p { color: var(--grey-gull); font-size: 1.05rem; margin-bottom: 0; }
+.section--dark .section-header p { color: #a9b8cc; }
+
+.eyebrow {
+    display: inline-block;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--reef-teal);
+    margin-bottom: 0.6rem;
+}
+.section--dark .eyebrow { color: #5eead4; }
+
+/* ===== HERO ===== */
+.hero {
+    background: linear-gradient(135deg, var(--harbour-blue) 0%, #1a2f4a 60%, #162942 100%);
+    color: #ffffff;
+    padding: 5.5rem 0 6rem;
+    position: relative;
+    overflow: hidden;
+}
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 80px;
+    background: var(--sail-white);
+    clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 80%);
+}
+.hero .container { position: relative; z-index: 1; }
+.hero h1 { color: #ffffff; max-width: 760px; margin-bottom: 1rem; }
+.hero p { color: #cbd5e1; font-size: 1.12rem; max-width: 660px; margin-bottom: 2rem; }
+.hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #93c5fd;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.9rem;
+    border-radius: 100px;
+    margin-bottom: 1.25rem;
+}
+.hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.hero-stats {
+    display: flex;
+    gap: 2.25rem;
+    flex-wrap: wrap;
+    margin-top: 2.75rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.hero-stat strong { display: block; font-size: 1.55rem; color: #ffffff; line-height: 1.2; }
+.hero-stat span { font-size: 0.8rem; color: #94a3b8; }
+
+/* ===== BUTTONS ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.6rem;
+    font-family: var(--font-sans);
+    font-size: 0.93rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all var(--transition);
+    text-align: center;
+    line-height: 1.4;
+}
+.btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+.btn-primary { background: var(--reef-teal); color: #ffffff; border-color: var(--reef-teal); }
+.btn-primary:hover:not(:disabled) {
+    background: var(--reef-teal-light);
+    border-color: var(--reef-teal-light);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(13, 115, 119, 0.3);
+}
+.btn-ghost { background: transparent; color: #ffffff; border-color: rgba(255, 255, 255, 0.35); }
+.btn-ghost:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.6); color: #ffffff; }
+.btn-sm { padding: 0.5rem 1.15rem; font-size: 0.84rem; }
+.btn-gold { background: var(--outback-gold); color: var(--ocean-ink); border-color: var(--outback-gold); }
+.btn-gold:hover:not(:disabled) { background: #f0b82e; border-color: #f0b82e; transform: translateY(-1px); }
+.btn-outline { background: var(--opera-white); color: var(--harbour-blue); border-color: var(--border-soft); }
+.btn-outline:hover { border-color: var(--reef-teal); color: var(--reef-teal); background: #f0faf9; }
+
+/* ===== TOPBAR SITUS ===== */
+.topbar {
+    background: var(--opera-white);
+    border-bottom: 1px solid var(--border-soft);
+}
+.topbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 64px;
+}
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-width: 0;
+    color: var(--harbour-blue);
+}
+.brand:hover { color: var(--harbour-blue); }
+.brand-mark {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: var(--harbour-blue);
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1;
+}
+.brand-text { display: flex; flex-direction: column; min-width: 0; }
+.brand-text strong {
+    font-size: 0.9rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+.brand-text small {
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--grey-gull);
+    white-space: nowrap;
+}
+.topbar-links { display: flex; align-items: center; gap: 0.2rem; }
+.topbar-links a {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--grey-gull);
+    padding: 0.45rem 0.8rem;
+    border-radius: 100px;
+    white-space: nowrap;
+    transition: background var(--transition), color var(--transition);
+}
+.topbar-links a:hover { background: #eef2f7; color: var(--harbour-blue); }
+.topbar-links a[aria-current="page"] { background: #e6f7f6; color: var(--reef-teal); }
+
+/* ===== NAVIGASI DALAM MATERI ===== */
+.subnav a.subnav-home {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    margin-right: 0.25rem;
+    padding: 0;
+    border-radius: 10px;
+    color: var(--harbour-blue);
+    background: #eef2f7;
+    transition: background var(--transition), color var(--transition);
+}
+.subnav a.subnav-home:hover { background: #e6f7f6; color: var(--reef-teal); }
+.subnav a.subnav-home:focus-visible { outline: 3px solid rgba(13, 115, 119, 0.35); outline-offset: 2px; }
+@media (max-width: 900px) {
+    .subnav a.subnav-home { width: 44px; height: 44px; }
+    .topbar-links a { min-height: 44px; }
+    .brand { min-height: 44px; }
+}
+@media (max-width: 640px) {
+    .topbar-inner { min-height: 60px; }
+    .brand-text strong { font-size: 0.86rem; }
+    .brand-text small { font-size: 0.62rem; }
+    .topbar-links a { padding: 0.4rem 0.6rem; font-size: 0.8rem; }
+}
+@media (max-width: 400px) {
+    .brand-text strong { font-size: 0.8rem; }
+    .topbar-links a { padding: 0.35rem 0.5rem; font-size: 0.78rem; }
+}
+@media (max-width: 355px) {
+    .brand-text { display: none; }
+}
+@media (max-width: 380px) {
+    .brand-text small { display: none; }
+    .brand-mark { width: 34px; height: 34px; }
+}
+
+/* ===== SUB NAV ===== */
+.subnav {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: rgba(250, 251, 252, 0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-soft);
+}
+.subnav-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.5rem;
+    overflow: visible;
+}
+.subnav-links {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    gap: 0.2rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    --fade-l: 20px;
+    --fade-r: 20px;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent 100%);
+}
+.subnav-links::-webkit-scrollbar { display: none; }
+.subnav-links.at-start { --fade-l: 0px; }
+.subnav-links.at-end { --fade-r: 0px; }
+.subnav a {
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--grey-gull);
+    padding: 0.45rem 0.85rem;
+    border-radius: 100px;
+    white-space: nowrap;
+}
+.subnav a:hover { background: #eef2f7; color: var(--harbour-blue); }
+.subnav a.active { background: var(--harbour-blue); color: #ffffff; }
+section[id] { scroll-margin-top: 72px; }
+
+/* ===== CARDS ===== */
+.card {
+    background: var(--opera-white);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition);
+}
+.card:hover { box-shadow: var(--shadow-md); }
+.card--accent { border-left: 4px solid var(--reef-teal); }
+.card--gold { border-left: 4px solid var(--outback-gold); }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(270px, 100%), 1fr)); gap: 1.4rem; }
+.stack { display: flex; flex-direction: column; gap: 1.75rem; }
+
+/* ===== CONCEPT LAYOUT ===== */
+.concept-layout {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 2.5rem;
+    align-items: start;
+}
+@media (max-width: 860px) { .concept-layout { grid-template-columns: 1fr; } }
+.concept-layout > *, .split > *, .card-grid > * { min-width: 0; }
+canvas { max-width: 100%; }
+
+.canvas-wrap {
+    background: var(--opera-white);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+}
+.canvas-wrap canvas, .sim-card canvas {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-sm);
+    background: #fcfdfe;
+}
+.canvas-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.75rem;
+    font-size: 0.83rem;
+    color: var(--grey-gull);
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.slope-readout {
+    font-family: var(--font-mono);
+    background: var(--harbour-blue);
+    color: #ffffff;
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.83rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+.slope-readout span { color: var(--outback-gold); }
+
+.slider-group { margin-top: 1.1rem; }
+.slider-group:first-of-type { margin-top: 0.5rem; }
+.slider-group label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.83rem;
+    font-weight: 600;
+    color: var(--grey-gull);
+    margin-bottom: 0.35rem;
+}
+.slider-group output { font-family: var(--font-mono); color: var(--reef-teal); font-size: 0.8rem; }
+input[type="range"] {
+    width: 100%;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--border-soft);
+    border-radius: 100px;
+    outline: none;
+    cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--reef-teal);
+    border: 3px solid #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+input[type="range"]::-moz-range-thumb {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--reef-teal);
+    border: 3px solid #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+/* ===== SIM CARDS ===== */
+.sim-card {
+    background: var(--opera-white);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    padding: 1.4rem;
+    box-shadow: var(--shadow-sm);
+}
+.sim-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.9rem;
+}
+.sim-head h4 { font-size: 0.95rem; }
+.sim-head .hint { font-size: 0.78rem; color: var(--grey-gull); }
+select {
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    font-weight: 500;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    background: var(--opera-white);
+    color: var(--ocean-ink);
+    cursor: pointer;
+    max-width: 100%;
+}
+select:focus-visible, .btn:focus-visible, input:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--reef-teal-light);
+    outline-offset: 2px;
+}
+.readout { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.85rem; }
+.readout-chip {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    background: #f1f5f9;
+    border: 1px solid var(--border-soft);
+    border-radius: 100px;
+    padding: 0.28rem 0.7rem;
+    color: var(--harbour-blue);
+}
+.readout-chip strong { color: var(--reef-teal); font-weight: 700; }
+.sim-note { font-size: 0.8rem; color: var(--grey-gull); margin: 0.75rem 0 0; }
+
+/* ===== FORMULAS / CODE-LIKE ===== */
+.m {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: #eef2f7;
+    padding: 0.08rem 0.35rem;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+.expr-block {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    background: var(--sandstone);
+    border: 1px solid #e7dfd0;
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1.1rem;
+    margin: 0.9rem 0;
+    overflow-x: auto;
+    color: var(--harbour-blue);
+    white-space: nowrap;
+}
+.formula-list { display: flex; flex-direction: column; gap: 0.8rem; }
+.formula-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--sail-white);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    font-size: 0.94rem;
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition);
+}
+.formula-item:hover { background: #eef2f7; }
+.formula-item .label { font-weight: 600; color: var(--harbour-blue); min-width: 128px; }
+.formula-item .expr { font-family: var(--font-mono); font-size: 0.88rem; }
+.formula-item .note { font-size: 0.8rem; color: var(--grey-gull); flex-basis: 100%; }
+
+/* ===== TABLES ===== */
+.table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    background: var(--opera-white);
+    box-shadow: var(--shadow-sm);
+}
+table.rules { width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 660px; }
+table.rules thead th {
+    text-align: left;
+    padding: 0.8rem 1rem;
+    background: var(--harbour-blue);
+    color: #ffffff;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+table.rules td { padding: 0.8rem 1rem; border-top: 1px solid var(--border-soft); vertical-align: top; }
+table.rules tbody tr:nth-child(even) { background: #fbfcfd; }
+table.rules td.formula { font-family: var(--font-mono); font-size: 0.85rem; color: var(--harbour-blue); }
+table.rules td.formula .ex { display: block; color: var(--grey-gull); font-size: 0.8rem; margin-top: 0.15rem; }
+table.sign { border-collapse: collapse; width: 100%; margin: 0.8rem 0; font-size: 0.88rem; text-align: center; }
+table.sign th, table.sign td { border: 1px solid var(--border-soft); padding: 0.5rem; }
+table.sign th { background: #f1f5f9; font-size: 0.8rem; color: var(--harbour-blue); }
+table.sign td.pos { color: #15803d; font-weight: 700; background: #f0fdf4; }
+table.sign td.neg { color: #b91c1c; font-weight: 700; background: #fef2f2; }
+
+/* Tables become stacked cards on narrow screens */
+@media (max-width: 720px) {
+    .table-wrap--main { overflow: visible; border: none; background: transparent; box-shadow: none; }
+    .rules-main, .rules-stack { min-width: 0 !important; }
+    .rules-main thead, .rules-stack thead {
+        position: absolute;
+        width: 1px; height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+    .rules-main, .rules-main tbody, .rules-main tr, .rules-main td,
+    .rules-stack, .rules-stack tbody, .rules-stack tr, .rules-stack td {
+        display: block;
+        width: 100%;
+    }
+    .rules-main tr, .rules-stack tr {
+        background: var(--opera-white) !important;
+        border: 1px solid var(--border-soft);
+        border-radius: var(--radius-sm);
+        padding: 0.8rem 1rem;
+        margin-bottom: 0.6rem;
+    }
+    .rules-main td, .rules-stack td,
+    table.rules-main td, table.rules-stack td {
+        border: none;
+        padding: 0.15rem 0;
+        white-space: normal;
+    }
+    .rules-main td:first-child, .rules-stack td:first-child {
+        font-size: 0.95rem;
+        color: var(--harbour-blue);
+    }
+    .rules-main td.formula, .rules-stack td.formula { font-size: 0.82rem; }
+    .rules-main td:nth-child(3)::before {
+        content: "Contoh: ";
+        font-family: var(--font-sans);
+        font-size: 0.76rem;
+        color: var(--grey-gull);
+    }
+    .rules-main td:nth-child(3) { margin-top: 0.3rem; color: var(--grey-gull); }
+}
+
+/* ===== STEPS (anatomi langkah) ===== */
+.steps { counter-reset: step; list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin: 1rem 0; }
+.steps li {
+    position: relative;
+    padding: 0.72rem 1rem 0.72rem 2.9rem;
+    font-size: 0.93rem;
+    background: var(--opera-white);
+    border: 1px solid var(--border-soft);
+    border-left: 4px solid #cbd5e1;
+    border-radius: 8px;
+    transition: box-shadow var(--transition);
+}
+.steps li:hover { box-shadow: var(--shadow-sm); }
+.steps li::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0.75rem; top: 0.72rem;
+    width: 1.6rem; height: 1.6rem;
+    border-radius: 50%;
+    background: #eef2f7;
+    color: #475569;
+    font-weight: 700;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.steps li .expr-block { margin: 0.5rem 0 0.15rem; }
+
+.step-tag {
+    display: inline-block;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 0.14rem 0.45rem;
+    border-radius: 4px;
+    margin-right: 0.4rem;
+    background: #eef2f7;
+    color: #475569;
+    vertical-align: 0.08em;
+}
+.steps li.key { background: #fffcf2; border-left-color: var(--outback-gold); }
+.steps li.key::before { background: var(--outback-gold); color: #3f2d00; }
+.steps li.key .step-tag { background: #fdf0c8; color: #7c4f00; }
+.steps li.answer { background: #f6fdf8; border-left-color: #16a34a; }
+.steps li.answer::before { background: #16a34a; color: #ffffff; }
+.steps li.answer .step-tag { background: #dcfce7; color: #166534; }
+.steps li.warn { background: #fff8f8; border-left-color: #dc2626; }
+.steps li.warn::before { background: #dc2626; color: #ffffff; }
+.steps li.warn .step-tag { background: #fee2e2; color: #991b1b; }
+.step-why { display: block; margin-top: 0.3rem; font-size: 0.82rem; color: #8a5b00; }
+.steps li.warn .step-why { color: #991b1b; }
+.steps li.answer .step-why { color: #166534; }
+
+/* ===== LEGEND ===== */
+.legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem 1.25rem;
+    background: var(--opera-white);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    padding: 0.8rem 1rem;
+    margin-bottom: 1.6rem;
+    font-size: 0.8rem;
+    box-shadow: var(--shadow-sm);
+}
+.legend .lg-title { font-weight: 700; color: var(--harbour-blue); }
+.legend .lg-item { display: inline-flex; align-items: center; gap: 0.4rem; color: #475569; }
+.legend .lg-swatch {
+    width: 16px; height: 16px;
+    border-radius: 4px;
+    border: 1px solid var(--border-soft);
+    border-left: 4px solid #cbd5e1;
+    background: var(--opera-white);
+    flex-shrink: 0;
+}
+.legend .lg-swatch.key { border-left-color: var(--outback-gold); background: #fffcf2; }
+.legend .lg-swatch.answer { border-left-color: #16a34a; background: #f6fdf8; }
+.legend .lg-swatch.warn { border-left-color: #dc2626; background: #fff8f8; }
+
+.expr-block.final {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+    border-left: 4px solid #16a34a;
+    color: #14532d;
+    font-weight: 600;
+}
+
+/* ===== ISTILAH INTERAKTIF ===== */
+.istilah {
+    display: inline;
+    font: inherit;
+    line-height: inherit;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    padding: 0 1px;
+    margin: 0;
+    cursor: pointer;
+    text-align: inherit;
+    text-decoration: underline dotted var(--outback-gold);
+    text-decoration-thickness: 1.6px;
+    text-underline-offset: 3px;
+    border-radius: 3px;
+    transition: background var(--transition), color var(--transition);
+}
+.istilah:hover,
+.istilah:focus-visible,
+.istilah[aria-expanded="true"] {
+    background: rgba(230, 168, 23, 0.18);
+    color: var(--reef-teal);
+    outline: none;
+}
+.istilah-pop {
+    position: fixed;
+    z-index: 200;
+    width: min(350px, calc(100vw - 32px));
+    background: var(--opera-white);
+    border: 1px solid var(--border-soft);
+    border-top: 4px solid var(--reef-teal);
+    border-radius: 12px;
+    box-shadow: 0 18px 50px rgba(15, 23, 42, 0.2);
+    padding: 1rem 1.1rem 1.05rem;
+    font-size: 0.86rem;
+    animation: istilahIn 0.16s ease;
+}
+.istilah-pop:focus { outline: none; }
+.istilah-pop:focus-visible { outline: 2px solid var(--reef-teal); outline-offset: 3px; }
+@keyframes istilahIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: none; }
+}
+.istilah-pop h4 {
+    font-size: 0.98rem;
+    margin-bottom: 0.35rem;
+    padding-right: 1.6rem;
+    color: var(--harbour-blue);
+}
+.istilah-pop p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-bottom: 0.55rem;
+    color: #374151;
+}
+.istilah-pop .contoh {
+    background: #f8fafc;
+    border-left: 3px solid var(--outback-gold);
+    border-radius: 4px;
+    padding: 0.45rem 0.6rem;
+    font-size: 0.8rem;
+    color: #475569;
+    margin-bottom: 0;
+}
+.istilah-pop .contoh strong { color: #8a5b00; }
+.istilah-close {
+    position: absolute;
+    top: 0.55rem;
+    right: 0.55rem;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: #eef2f7;
+    color: #475569;
+    font-size: 1.05rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.istilah-close:hover { background: #e2e8f0; color: var(--ocean-ink); }
+.istilah-pop::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--opera-white);
+    border-right: 1px solid var(--border-soft);
+    border-bottom: 1px solid var(--border-soft);
+}
+.istilah-pop.is-above::after { bottom: -7px; left: var(--arrow, 50%); transform: rotate(45deg); margin-left: -6px; }
+.istilah-pop.is-below::after { top: -7px; left: var(--arrow, 50%); transform: rotate(225deg); margin-left: -6px; }
+@media (max-width: 640px) {
+    .istilah-pop.is-sheet {
+        left: 12px !important;
+        right: 12px;
+        bottom: 12px !important;
+        top: auto !important;
+        width: auto;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+    .istilah-pop.is-sheet::after { display: none; }
+}
+
+/* ===== HERO TIP ===== */
+.hero-tip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 1.15rem;
+    padding: 0.35rem 0.85rem;
+    font-size: 0.82rem;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 100px;
+}
+
+/* ===== ACCORDION (CONTOH) ===== */
+.example {
+    background: var(--opera-white);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 0.85rem;
+    overflow: hidden;
+}
+.example summary {
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    list-style: none;
+    color: var(--ocean-ink);
+}
+.example summary::-webkit-details-marker { display: none; }
+.example summary::after {
+    content: '+';
+    flex-shrink: 0;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: #eef2f7;
+    color: var(--reef-teal);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+.example[open] summary::after { content: '−'; background: #e6f7f6; }
+.example[open] summary { border-bottom: 1px solid var(--border-soft); }
+.example-body { padding: 1rem 1.25rem 1.25rem; }
+.example-body > p:last-child { margin-bottom: 0; }
+.example .tag { font-family: var(--font-mono); font-size: 0.78rem; color: var(--reef-teal); font-weight: 600; }
+
+/* ===== TOPIC BLOCKS ===== */
+.topic {
+    background: var(--opera-white);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    padding: 1.85rem;
+    box-shadow: var(--shadow-sm);
+}
+.topic > h3 { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.6rem; }
+.topic-num {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    border-radius: var(--radius-sm);
+    background: var(--harbour-blue);
+    color: #ffffff;
+    font-size: 0.82rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.topic p:last-child { margin-bottom: 0; }
+.split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.75rem;
+    align-items: start;
+}
+@media (max-width: 800px) { .split { grid-template-columns: 1fr; } }
+.split--wide { grid-template-columns: 1.25fr 1fr; }
+@media (max-width: 800px) { .split--wide { grid-template-columns: 1fr; } }
+.calc-card { align-self: start; position: sticky; top: 84px; }
+@media (max-width: 800px) { .calc-card { position: static; top: auto; } }
+
+/* ===== MISC BOXES ===== */
+.highlight-box {
+    background: linear-gradient(135deg, #f0faf9, #e6f7f6);
+    border: 1px solid #b2e4e0;
+    border-radius: var(--radius-md);
+    padding: 1.4rem 1.6rem;
+    margin: 1.2rem 0;
+}
+.highlight-box p:last-child { margin-bottom: 0; }
+.note-box {
+    background: #fffaf0;
+    border: 1px solid #f5e0b8;
+    border-left: 4px solid var(--outback-gold);
+    border-radius: var(--radius-sm);
+    padding: 0.95rem 1.15rem;
+    margin: 1.1rem 0;
+    font-size: 0.9rem;
+}
+.note-box p:last-child { margin-bottom: 0; }
+.note-box strong { color: #8a5b00; }
+.pill-row { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.6rem; }
+.pill {
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    padding: 0.22rem 0.65rem;
+    border-radius: 100px;
+    background: #eef2f7;
+    color: var(--harbour-blue);
+    border: 1px solid var(--border-soft);
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition);
+}
+.pill:hover { background: #e6f7f6; border-color: var(--reef-teal); color: var(--reef-teal); }
+
+/* ===== CALCULATOR ===== */
+.calc-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.calc-row input[type="text"] {
+    flex: 1 1 260px;
+    min-width: 0;
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    padding: 0.6rem 0.8rem;
+    border: 1.5px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    background: var(--opera-white);
+    color: var(--ocean-ink);
+}
+.calc-row input[type="text"]:focus { border-color: var(--reef-teal); outline: none; }
+.calc-out {
+    margin-top: 1rem;
+    font-size: 0.92rem;
+    min-height: 2.5rem;
+}
+.calc-out .final {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--harbour-blue);
+    background: #e6f7f6;
+    border: 1px solid #b2e4e0;
+    border-radius: var(--radius-sm);
+    padding: 0.7rem 0.9rem;
+    margin-top: 0.6rem;
+    overflow-x: auto;
+}
+.calc-out .err { color: #b91c1c; font-size: 0.88rem; }
+.calc-out .calc-steps { font-family: var(--font-mono); font-size: 0.82rem; color: #475569; line-height: 1.9; }
+.calc-out .calc-steps span { color: var(--reef-teal); }
+
+/* ===== MISTAKES ===== */
+.mistake-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 1rem; }
+.mistake {
+    background: var(--opera-white);
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.1rem;
+    font-size: 0.9rem;
+}
+.mistake .row { display: flex; gap: 0.55rem; align-items: flex-start; margin-bottom: 0.4rem; }
+.mistake .row:last-child { margin-bottom: 0; }
+.mistake .ico { font-weight: 700; flex-shrink: 0; line-height: 1.5; }
+.mistake .ico.x { color: #dc2626; }
+.mistake .ico.v { color: #16a34a; }
+.mistake .txt { color: #374151; }
+
+/* ===== CHEATSHEET ===== */
+.cheat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 1rem; }
+.cheat {
+    background: var(--opera-white);
+    border: 1px solid var(--border-soft);
+    border-top: 3px solid var(--reef-teal);
+    border-radius: var(--radius-sm);
+    padding: 1.1rem 1.2rem;
+}
+.cheat h4 { margin-bottom: 0.35rem; font-size: 0.88rem; color: var(--grey-gull); text-transform: uppercase; letter-spacing: 0.05em; }
+.cheat .eq { font-family: var(--font-mono); font-size: 0.9rem; color: var(--harbour-blue); }
+
+/* ===== GLOSSARY ===== */
+.glossary { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 1rem 2rem; }
+.gloss-item { border-bottom: 1px dashed var(--border-soft); padding-bottom: 0.7rem; }
+.gloss-item dt { font-weight: 700; font-size: 0.92rem; color: var(--harbour-blue); }
+.gloss-item dd { font-size: 0.86rem; color: #475569; margin: 0.15rem 0 0; }
+
+/* ===== QUIZ ===== */
+.quiz-card { max-width: 700px; }
+.quiz-bar { height: 6px; background: #e2e8f0; border-radius: 100px; overflow: hidden; margin-bottom: 1.1rem; }
+.quiz-bar span { display: block; height: 100%; width: 0; background: var(--reef-teal); transition: width 0.35s ease; }
+.quiz-question { font-size: 1.08rem; font-weight: 600; margin-bottom: 1rem; color: var(--ocean-ink); }
+.quiz-options { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.1rem; }
+.quiz-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: var(--sail-white);
+    border: 1.5px solid var(--border-soft);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition);
+    font-size: 0.95rem;
+    font-family: var(--font-sans);
+    text-align: left;
+    width: 100%;
+    color: var(--ocean-ink);
+}
+.quiz-option:hover:not(.correct):not(.incorrect) { border-color: var(--reef-teal); background: #f0faf9; }
+.quiz-option.selected { border-color: var(--reef-teal); background: #e6f7f6; font-weight: 500; }
+.quiz-option.correct { border-color: #16a34a; background: #f0fdf4; }
+.quiz-option.incorrect { border-color: #dc2626; background: #fef2f2; }
+.quiz-option .marker {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    border: 2px solid var(--border-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    color: var(--grey-gull);
+}
+.quiz-option.selected .marker { border-color: var(--reef-teal); background: var(--reef-teal); color: #ffffff; }
+.quiz-option.correct .marker { border-color: #16a34a; background: #16a34a; color: #ffffff; }
+.quiz-option.incorrect .marker { border-color: #dc2626; background: #dc2626; color: #ffffff; }
+.quiz-feedback { padding: 0.85rem 1rem; border-radius: var(--radius-sm); font-size: 0.9rem; margin-bottom: 1rem; display: none; }
+.quiz-feedback.show { display: block; }
+.quiz-feedback.success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
+.quiz-feedback.error { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+.quiz-nav { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.quiz-progress { font-size: 0.84rem; color: var(--grey-gull); font-weight: 500; }
+.quiz-actions { display: flex; gap: 0.5rem; }
+.quiz-result { text-align: center; padding: 0.5rem 0 0.25rem; }
+.quiz-result .score { font-size: 2.9rem; font-weight: 800; line-height: 1; color: var(--reef-teal); letter-spacing: -0.03em; }
+.quiz-result .score small { font-size: 1rem; font-weight: 600; color: var(--grey-gull); }
+.quiz-result p { margin: 0.75rem 0 1.25rem; }
+
+/* ===== SOUND TOGGLE ===== */
+.sound-toggle {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.65rem;
+    font-family: inherit;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #475569;
+    background: #eef2f7;
+    border: 1px solid transparent;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+.sound-toggle:hover { background: #e2e8f0; color: var(--harbour-blue); }
+.sound-toggle:active { transform: scale(0.96); }
+.sound-toggle:focus-visible { outline: 3px solid rgba(13, 115, 119, 0.35); outline-offset: 2px; }
+.sound-toggle[aria-pressed="true"] { color: var(--reef-teal); background: #e6f7f6; }
+.sound-toggle[aria-pressed="true"]:hover { background: #d7f0ee; }
+.sound-toggle[aria-pressed="false"] { color: #64748b; background: transparent; border-color: var(--border-soft); }
+.sound-toggle[aria-pressed="false"]:hover { background: #f1f5f9; color: #475569; }
+.sound-ico { display: inline-flex; }
+.sound-toggle .slash { display: none; }
+.sound-toggle[aria-pressed="false"] .wave { display: none; }
+.sound-toggle[aria-pressed="false"] .slash { display: block; }
+@media (max-width: 900px) {
+    .sound-toggle {
+        width: 44px;
+        height: 44px;
+        padding: 0;
+    }
+    .sound-toggle .sound-label { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .sound-toggle { transition: none; }
+}
+
+/* ===== FOOTER ===== */
+.footer { background: var(--harbour-blue); color: #94a3b8; padding: 3rem 0 2rem; font-size: 0.9rem; }
+.footer a { color: #cbd5e1; }
+.footer a:hover { color: #ffffff; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+@media (max-width: 640px) { .footer-grid { grid-template-columns: 1fr; } }
+.footer h4 { color: #ffffff; font-size: 0.95rem; margin-bottom: 0.75rem; letter-spacing: 0.02em; }
+.footer p { color: #94a3b8; }
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: 0.82rem;
+}
+
+/* ===== UTILITY ===== */
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.text-center { text-align: center; }
+.text-muted { color: var(--grey-gull); }
+.fw-600 { font-weight: 600; }
+.small { font-size: 0.85rem; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+    .subnav a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+    }
+}
+
+@media (max-width: 640px) {
+    h1 { font-size: 1.95rem; }
+    h2 { font-size: 1.42rem; }
+    h3 { font-size: 1.08rem; }
+    .hero { padding: 4rem 0 4rem; }
+    .section { padding: 2.75rem 0; }
+    .card, .topic { padding: 1.3rem; }
+    .formula-item .label { min-width: 100%; }
+    .hero-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem 1rem;
+    }
+    .hero-stat strong { font-size: 1.3rem; }
+    .example summary { font-size: 0.9rem; }
+    .m { white-space: normal; overflow-wrap: break-word; }
+    .expr-block { white-space: normal; overflow-wrap: break-word; }
+
+    /* Target sentuh nyaman di layar kecil */
+    .btn-sm { min-height: 44px; padding-top: 0.55rem; padding-bottom: 0.55rem; }
+    .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 38px;
+        padding: 0.3rem 0.75rem;
+        font-size: 0.78rem;
+    }
+    select { min-height: 44px; font-size: 16px; }
+
+    /* Cegah iOS Safari memperbesar halaman saat input difokuskan */
+    .calc-row input[type="text"] { font-size: 16px; padding-top: 0.65rem; padding-bottom: 0.65rem; }
+
+    /* Perbesar area sentuh slider tanpa mengubah tampilan garisnya */
+    input[type="range"] {
+        height: 34px;
+        background: linear-gradient(var(--border-soft), var(--border-soft)) center / 100% 6px no-repeat;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== TOPBAR ==================== -->
+<div class="topbar">
+    <div class="container topbar-inner">
+        <a class="brand" href="index.html" aria-label="Beranda Materi Matematika">
+            <span class="brand-mark" aria-hidden="true">∑</span>
+            <span class="brand-text">
+                <strong>Materi Matematika</strong>
+                <small>Limit &amp; Turunan</small>
+            </span>
+        </a>
+        <nav class="topbar-links" aria-label="Navigasi utama">
+            <a href="limit.html">Limit</a>
+            <a href="turunan.html" aria-current="page">Turunan</a>
+        </nav>
+    </div>
+</div>
+
+<!-- ==================== HERO ==================== -->
+<header class="hero" id="atas">
+    <div class="container">
+        <span class="hero-badge">Matematika · Kelas 11–12</span>
+        <h1>Turunan Fungsi Aljabar</h1>
+        <p>
+            Dari garis secan menuju garis singgung — pahami konsep turunan secara visual,
+            kuasai sembilan aturan turunan, lihat contoh yang dikerjakan bertahap, lalu
+            uji pemahaman Anda dengan latihan interaktif.
+        </p>
+        <div class="hero-actions">
+            <a href="#konsep" class="btn btn-ghost">Mulai Belajar ↓</a>
+            <a href="#latihan" class="btn btn-primary">Latihan Soal</a>
+        </div>
+        <div class="hero-tip">
+            <span aria-hidden="true">💡</span>
+            Istilah bergaris putus-putus bisa diklik untuk melihat penjelasan singkat
+            · efek suara bisa diatur lewat ikon di navigasi.
+        </div>
+        <div class="hero-stats">
+            <div class="hero-stat"><strong>9</strong><span>aturan turunan</span></div>
+            <div class="hero-stat"><strong>6</strong><span>contoh bertahap</span></div>
+            <div class="hero-stat"><strong>3</strong><span>simulasi visual</span></div>
+            <div class="hero-stat"><strong>12</strong><span>soal interaktif</span></div>
+        </div>
+    </div>
+</header>
+
+<!-- ==================== SUB NAV ==================== -->
+<nav class="subnav" aria-label="Navigasi materi">
+    <div class="subnav-inner container">
+        <a class="subnav-home" href="index.html" aria-label="Beranda materi" title="Beranda materi">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 10.5 12 3l9 7.5"></path>
+                <path d="M5 9.5V21h5v-6h4v6h5V9.5"></path>
+            </svg>
+        </a>
+        <div class="subnav-links">
+            <a href="#konsep">1 · Konsep</a>
+            <a href="#rumus">2 · Aturan Turunan</a>
+            <a href="#teknik">3 · Contoh Bertahap</a>
+            <a href="#aplikasi">4 · Penerapan</a>
+            <a href="#latihan-mandiri">5 · Latihan Mandiri</a>
+            <a href="#latihan">6 · Kuis</a>
+            <a href="#ringkasan">7 · Ringkasan</a>
+        </div>
+        <button class="sound-toggle" id="soundToggle" type="button"
+                aria-pressed="true" aria-label="Efek suara aktif. Klik untuk mematikan."
+                title="Efek suara aktif — klik untuk mematikan">
+            <span class="sound-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor" stroke="none"></path>
+                    <path class="wave" d="M16.5 8.5a5 5 0 0 1 0 7"></path>
+                    <path class="wave" d="M19 6a8.5 8.5 0 0 1 0 12"></path>
+                    <path class="slash" d="M16 9l5 5M21 9l-5 5"></path>
+                </svg>
+            </span>
+            <span class="sound-label">Suara</span>
+        </button>
+    </div>
+</nav>
+
+<main>
+
+<!-- ==================== 1. KONSEP ==================== -->
+<section class="section" id="konsep">
+    <div class="container">
+        <div class="section-header">
+            <span class="eyebrow">Bagian 1 · Konsep</span>
+            <h2>Apa Itu Turunan?</h2>
+            <p>
+                Turunan fungsi di suatu titik adalah <strong>gradien garis singgung</strong>
+                kurva di titik tersebut. Konsep ini lahir dari limit: saat dua titik pada
+                kurva saling mendekat, garis secan berubah menjadi garis singgung.
+            </p>
+        </div>
+
+        <div class="concept-layout">
+            <!-- Interactive canvas: secan -> tangent -->
+            <div class="canvas-wrap">
+                <canvas id="secanCanvas" width="560" height="400"></canvas>
+                <div class="canvas-label">
+                    <span>Garis secan AB → garis singgung saat h → 0</span>
+                    <span class="slope-readout">m tangen = <span id="secanSlopeVal">2.00</span></span>
+                </div>
+                <div class="slider-group">
+                    <label for="pointSlider">
+                        <span>Titik A (posisi x)</span>
+                        <output id="pointLabel">x = 1.0</output>
+                    </label>
+                    <input type="range" id="pointSlider" min="-2" max="2.5" step="0.1" value="1"
+                           aria-label="Geser posisi titik A">
+                </div>
+                <div class="slider-group">
+                    <label for="hSlider">
+                        <span>Jarak h (B mendekati A)</span>
+                        <output id="hLabel">h = 1.00</output>
+                    </label>
+                    <input type="range" id="hSlider" min="0.05" max="2" step="0.05" value="1"
+                           aria-label="Geser jarak h">
+                </div>
+                <div class="readout">
+                    <span class="readout-chip">gradien secan = <strong id="secanSlope">2.00</strong></span>
+                    <span class="readout-chip">gradien tangen = <strong id="tangentSlope">2.00</strong></span>
+                </div>
+                <div class="sim-note">
+                    Untuk f(x) = x², gradien secan = 2x + h. Semakin kecil h, semakin dekat
+                    nilainya ke 2x.
+                </div>
+            </div>
+
+            <!-- Explanation -->
+            <div class="stack" style="gap: 1.25rem;">
+                <div class="card card--accent">
+                    <h3>Dari Secan ke Tangen</h3>
+                    <p>
+                        Misalkan kita punya kurva <em>f</em>(<em>x</em>). Dua titik
+                        <em>A</em>(<em>x</em>, <em>f</em>(<em>x</em>)) dan
+                        <em>B</em>(<em>x</em> + <em>h</em>, <em>f</em>(<em>x</em> + <em>h</em>))
+                        dihubungkan oleh garis secan. Gradiennya adalah
+                        <span class="m">[f(x+h) − f(x)] / h</span>.
+                    </p>
+                    <p>
+                        Ketika <em>B</em> digeser mendekati <em>A</em> (h → 0), garis secan
+                        berubah menjadi garis singgung di <em>A</em>. Nilai limit gradien
+                        secan itulah yang disebut <strong>turunan</strong>.
+                    </p>
+                    <div class="expr-block">f'(x) = lim<sub>h→0</sub> [ f(x + h) − f(x) ] / h</div>
+                    <p class="small text-muted" style="margin-bottom:0;">
+                        Notasi lain yang sering dipakai: <span class="m">y'</span>,
+                        <span class="m">dy/dx</span>, dan <span class="m">D<sub>x</sub> f(x)</span>.
+                    </p>
+                </div>
+
+                <div class="card card--gold">
+                    <h3>Menghitung Turunan dari Definisi</h3>
+                    <p class="small" style="margin-bottom:0.5rem;">Contoh: <span class="m">f(x) = x²</span></p>
+                    <ol class="steps">
+                        <li>
+                            <span class="step-tag">Substitusi</span>
+                            <span class="m">f(x+h) = (x+h)² = x² + 2xh + h²</span>
+                        </li>
+                        <li>
+                            <span class="step-tag">Selisih</span>
+                            <span class="m">f(x+h) − f(x) = 2xh + h²</span>
+                        </li>
+                        <li class="key">
+                            <span class="step-tag">Bagi h</span>
+                            <span class="m">(2xh + h²)/h = 2x + h</span>
+                            <span class="step-why">Pembagian ini sah karena h ≠ 0 — h hanya mendekati 0, bukan sama dengan 0.</span>
+                        </li>
+                        <li class="answer">
+                            <span class="step-tag">Limit</span>
+                            Ambil h → 0: <span class="m">f'(x) = 2x</span>
+                        </li>
+                    </ol>
+                    <p class="small text-muted" style="margin-bottom:0;">
+                        Cek: di x = 3, gradien garis singgung = 6. Geser slider di samping
+                        untuk memverifikasi secara visual.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-grid mt-4">
+            <div class="card">
+                <h4 style="margin-bottom:0.35rem;">📐 Sebagai gradien</h4>
+                <p class="small" style="margin-bottom:0;">
+                    <span class="m">f'(a)</span> adalah kemiringan garis singgung kurva di
+                    <span class="m">x = a</span>. Nilai positif berarti kurva sedang menanjak,
+                    negatif berarti menurun.
+                </p>
+            </div>
+            <div class="card">
+                <h4 style="margin-bottom:0.35rem;">⏱️ Sebagai laju perubahan</h4>
+                <p class="small" style="margin-bottom:0;">
+                    Turunan menjawab “seberapa cepat sesuatu berubah”. Jika
+                    <span class="m">s(t)</span> posisi, maka <span class="m">s'(t)</span>
+                    adalah kecepatan pada saat t.
+                </p>
+            </div>
+            <div class="card">
+                <h4 style="margin-bottom:0.35rem;">🔍 Sebagai aproksimasi</h4>
+                <p class="small" style="margin-bottom:0;">
+                    Di sekitar titik singgung, kurva mirip garis lurusnya. Karena itu
+                    <span class="m">f(x+h) ≈ f(x) + f'(x)·h</span> untuk h kecil.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 2. RUMUS ==================== -->
+<section class="section section--alt" id="rumus">
+    <div class="container">
+        <div class="section-header">
+            <span class="eyebrow">Bagian 2 · Aturan Turunan</span>
+            <h2>Rumus Turunan Fungsi Aljabar</h2>
+            <p>
+                Hafalkan pola dasarnya, lalu kenali aturan untuk operasi yang lebih kompleks.
+                Klik kartu rumus untuk menandai bahwa Anda sudah memahaminya.
+            </p>
+        </div>
+
+        <div class="table-wrap table-wrap--main mb-3">
+            <table class="rules rules-main">
+                <thead>
+                    <tr>
+                        <th style="width:24%;">Aturan</th>
+                        <th style="width:38%;">Bentuk umum</th>
+                        <th>Contoh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Konstanta</strong></td>
+                        <td class="formula">f(x) = c &nbsp;→&nbsp; f'(x) = 0</td>
+                        <td class="formula">f(x) = 7 → f'(x) = 0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Identitas</strong></td>
+                        <td class="formula">f(x) = x &nbsp;→&nbsp; f'(x) = 1</td>
+                        <td class="formula">f(x) = x → f'(x) = 1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pangkat</strong></td>
+                        <td class="formula">f(x) = x<sup>n</sup> &nbsp;→&nbsp; f'(x) = n·x<sup>n−1</sup></td>
+                        <td class="formula">f(x) = x<sup>5</sup> → f'(x) = 5x<sup>4</sup></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kelipatan konstan</strong></td>
+                        <td class="formula">f(x) = c·u(x) &nbsp;→&nbsp; f'(x) = c·u'(x)</td>
+                        <td class="formula">f(x) = 3x<sup>4</sup> → f'(x) = 12x<sup>3</sup></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Jumlah / selisih</strong></td>
+                        <td class="formula">f(x) = u ± v &nbsp;→&nbsp; f' = u' ± v'</td>
+                        <td class="formula">f(x) = x<sup>3</sup> + 2x → 3x<sup>2</sup> + 2</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Perkalian</strong></td>
+                        <td class="formula">f(x) = u·v &nbsp;→&nbsp; f' = u'v + uv'</td>
+                        <td class="formula">f(x) = x<sup>2</sup>(3x+1) → 9x<sup>2</sup> + 2x</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pembagian</strong></td>
+                        <td class="formula">f(x) = u/v &nbsp;→&nbsp; f' = (u'v − uv') / v<sup>2</sup></td>
+                        <td class="formula">f(x) = (3x−1)/(x+2) → 7/(x+2)<sup>2</sup></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Aturan rantai</strong></td>
+                        <td class="formula">h(x) = f(g(x)) &nbsp;→&nbsp; h' = f'(g(x))·g'(x)</td>
+                        <td class="formula">h(x) = (2x+1)<sup>4</sup> → 8(2x+1)<sup>3</sup></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pangkat rasional / negatif</strong></td>
+                        <td class="formula">f(x) = x<sup>m/n</sup> &nbsp;→&nbsp; f' = (m/n)·x<sup>m/n − 1</sup></td>
+                        <td class="formula">f(x) = √x → 1/(2√x)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="split">
+            <div class="card">
+                <h3 style="margin-bottom:0.75rem;">Bentuk Akar &amp; Pecahan</h3>
+                <p class="small">
+                    Ubah dulu ke bentuk pangkat, baru gunakan aturan pangkat. Ini trik yang
+                    menyelamatkan banyak soal.
+                </p>
+                <div class="formula-list">
+                    <div class="formula-item" data-formula>
+                        <span class="label">Akar kuadrat</span>
+                        <span class="expr">√x = x<sup>1/2</sup> → 1/(2√x)</span>
+                        <span class="note">Berlaku untuk x &gt; 0.</span>
+                    </div>
+                    <div class="formula-item" data-formula>
+                        <span class="label">Akar pangkat n</span>
+                        <span class="expr"><sup>n</sup>√x = x<sup>1/n</sup> → (1/n)x<sup>1/n − 1</sup></span>
+                        <span class="note">Contoh: <sup>3</sup>√x → (1/3)x<sup>−2/3</sup>.</span>
+                    </div>
+                    <div class="formula-item" data-formula>
+                        <span class="label">Pecahan 1/x</span>
+                        <span class="expr">1/x = x<sup>−1</sup> → −1/x<sup>2</sup></span>
+                        <span class="note">Pangkat negatif diturunkan seperti biasa.</span>
+                    </div>
+                    <div class="formula-item" data-formula>
+                        <span class="label">Pecahan 1/x²</span>
+                        <span class="expr">1/x<sup>2</sup> = x<sup>−2</sup> → −2/x<sup>3</sup></span>
+                        <span class="note">Turunkan pangkat, lalu kurangi satu.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="card">
+                    <h3 style="margin-bottom:0.6rem;">Membaca Aturan Rantai</h3>
+                    <p class="small">
+                        Aturan rantai dipakai saat ada “fungsi di dalam fungsi”. Turunkan
+                        bagian luar (dengan isi tetap), lalu <strong>kalikan</strong> dengan
+                        turunan bagian dalam.
+                    </p>
+                    <div class="expr-block">h(x) = (2x + 1)<sup>4</sup><br>h'(x) = 4(2x + 1)<sup>3</sup> · 2 = 8(2x + 1)<sup>3</sup></div>
+                    <div class="note-box">
+                        <p>
+                            <strong>Jebakan paling umum:</strong> lupa mengalikan turunan
+                            fungsi dalam. Tanpa “· 2”, jawabannya salah.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card card--gold mt-3" style="background: var(--opera-white);">
+                    <h3 style="margin-bottom:0.5rem;">Contoh Cepat</h3>
+                    <p class="small" style="margin-bottom:0;">
+                        Turunan <span class="m">f(x) = 3x<sup>4</sup> − 2x<sup>2</sup> + 5x − 7</span>
+                        adalah <span class="m">f'(x) = 12x<sup>3</sup> − 4x + 5</span>.
+                        Konstanta −7 hilang karena turunannya 0.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 3. CONTOH BERTAHAP ==================== -->
+<section class="section" id="teknik">
+    <div class="container">
+        <div class="section-header">
+            <span class="eyebrow">Bagian 3 · Teknik</span>
+            <h2>Contoh Dikerjakan Bertahap</h2>
+            <p>
+                Klik setiap contoh untuk membuka langkah pengerjaan. Pola yang sama dipakai
+                berulang kali — setelah tiga atau empat contoh, sebagian besar soal akan
+                terasa familiar.
+            </p>
+        </div>
+
+        <div class="legend" aria-label="Keterangan penanda langkah">
+            <span class="lg-title">Cara membaca langkah:</span>
+            <span class="lg-item"><span class="lg-swatch"></span> langkah biasa</span>
+            <span class="lg-item"><span class="lg-swatch key"></span> langkah kunci (sering dilewatkan)</span>
+            <span class="lg-item"><span class="lg-swatch answer"></span> hasil / jawaban</span>
+            <span class="lg-item"><span class="lg-swatch warn"></span> jebakan &amp; cek ulang</span>
+        </div>
+
+        <div class="split split--wide">
+            <div>
+                <details class="example" open>
+                    <summary>1. Polinomial: f(x) = 3x⁴ − 2x² + 5x − 7</summary>
+                    <div class="example-body">
+                        <ol class="steps">
+                            <li><span class="step-tag">Aturan</span>Turunkan tiap suku satu per satu.</li>
+                            <li class="key">
+                                <span class="step-tag">Pangkat</span>
+                                <span class="m">3x<sup>4</sup> → 3 · 4x<sup>3</sup> = 12x<sup>3</sup></span>
+                                <span class="step-why">Pangkat dikalikan ke depan (4 × 3), lalu pangkatnya dikurangi satu.</span>
+                            </li>
+                            <li><span class="step-tag">Pangkat</span><span class="m">−2x<sup>2</sup> → −2 · 2x = −4x</span></li>
+                            <li><span class="step-tag">Konstanta</span><span class="m">5x → 5</span> dan <span class="m">−7 → 0</span></li>
+                        </ol>
+                        <div class="expr-block final">Jawaban: f'(x) = 12x<sup>3</sup> − 4x + 5</div>
+                    </div>
+                </details>
+
+                <details class="example">
+                    <summary>2. Aturan rantai: f(x) = (2x + 1)⁴</summary>
+                    <div class="example-body">
+                        <ol class="steps">
+                            <li><span class="step-tag">Kenali</span>Fungsi luar: ( )⁴. Fungsi dalam: <span class="m">2x + 1</span>.</li>
+                            <li class="key">
+                                <span class="step-tag">Turunkan luar</span>
+                                <span class="m">4(2x + 1)<sup>3</sup></span>
+                                <span class="step-why">Isi di dalam kurung tetap ditulis apa adanya.</span>
+                            </li>
+                            <li class="key"><span class="step-tag">Turunkan dalam</span><span class="m">d/dx(2x + 1) = 2</span></li>
+                            <li class="warn">
+                                <span class="step-tag">Jangan lupa</span>Kalikan kedua hasil.
+                                <span class="step-why">Jebakan utamanya: tanpa “· 2”, jawaban 4(2x+1)³ masih salah.</span>
+                            </li>
+                        </ol>
+                        <div class="expr-block final">Jawaban: f'(x) = 4(2x + 1)<sup>3</sup> · 2 = 8(2x + 1)<sup>3</sup></div>
+                    </div>
+                </details>
+
+                <details class="example">
+                    <summary>3. Aturan perkalian: f(x) = x²(3x + 1)</summary>
+                    <div class="example-body">
+                        <ol class="steps">
+                            <li>
+                                <span class="step-tag">Misalkan</span>
+                                <span class="m">u = x<sup>2</sup></span> (u' = 2x) dan
+                                <span class="m">v = 3x + 1</span> (v' = 3).
+                            </li>
+                            <li class="key">
+                                <span class="step-tag">Rumus</span>
+                                <span class="m">f' = u'v + uv'</span>
+                                <span class="step-why">Turunan perkalian bukan u'·v'. Dua suku harus dijumlahkan.</span>
+                            </li>
+                            <li><span class="step-tag">Substitusi</span><span class="m">= 2x(3x + 1) + x<sup>2</sup>(3)</span></li>
+                            <li><span class="step-tag">Sederhanakan</span><span class="m">= 6x<sup>2</sup> + 2x + 3x<sup>2</sup></span></li>
+                        </ol>
+                        <div class="expr-block final">Jawaban: f'(x) = 9x<sup>2</sup> + 2x</div>
+                        <p class="small text-muted" style="margin-bottom:0;">
+                            Alternatif: jabarkan dulu <span class="m">f(x) = 3x<sup>3</sup> + x<sup>2</sup></span>,
+                            lalu turunkan → <span class="m">9x<sup>2</sup> + 2x</span>. Hasilnya sama.
+                        </p>
+                    </div>
+                </details>
+
+                <details class="example">
+                    <summary>4. Aturan pembagian: f(x) = (3x − 1)/(x + 2)</summary>
+                    <div class="example-body">
+                        <ol class="steps">
+                            <li>
+                                <span class="step-tag">Misalkan</span>
+                                <span class="m">u = 3x − 1</span> (u' = 3) dan
+                                <span class="m">v = x + 2</span> (v' = 1).
+                            </li>
+                            <li class="key"><span class="step-tag">Rumus</span><span class="m">f' = (u'v − uv') / v<sup>2</sup></span></li>
+                            <li class="warn">
+                                <span class="step-tag">Jebakan</span>
+                                Penyebut harus dikuadratkan: <span class="m">(x + 2)<sup>2</sup></span>.
+                                <span class="step-why">Banyak yang menulis pembagi (x+2) saja — itu salah.</span>
+                            </li>
+                            <li><span class="step-tag">Substitusi</span><span class="m">= [3(x + 2) − (3x − 1)·1] / (x + 2)<sup>2</sup></span></li>
+                            <li><span class="step-tag">Sederhanakan</span><span class="m">= (3x + 6 − 3x + 1) / (x + 2)<sup>2</sup></span></li>
+                        </ol>
+                        <div class="expr-block final">Jawaban: f'(x) = 7 / (x + 2)<sup>2</sup></div>
+                    </div>
+                </details>
+
+                <details class="example">
+                    <summary>5. Akar + rantai: f(x) = √(4x + 5)</summary>
+                    <div class="example-body">
+                        <ol class="steps">
+                            <li><span class="step-tag">Ubah bentuk</span><span class="m">√(4x + 5) = (4x + 5)<sup>1/2</sup></span></li>
+                            <li class="key"><span class="step-tag">Turunkan luar</span><span class="m">½(4x + 5)<sup>−1/2</sup></span></li>
+                            <li class="key"><span class="step-tag">Turunkan dalam</span><span class="m">d/dx(4x + 5) = 4</span></li>
+                            <li><span class="step-tag">Kalikan</span><span class="m">½ · 4 = 2</span></li>
+                        </ol>
+                        <div class="expr-block final">Jawaban: f'(x) = 2 / √(4x + 5)</div>
+                    </div>
+                </details>
+
+                <details class="example">
+                    <summary>6. Rantai dua lapis: f(x) = (x² + 3x)⁵</summary>
+                    <div class="example-body">
+                        <ol class="steps">
+                            <li><span class="step-tag">Kenali</span>Luar ( )⁵, dalam <span class="m">x<sup>2</sup> + 3x</span>.</li>
+                            <li class="key"><span class="step-tag">Turunkan luar</span><span class="m">5(x<sup>2</sup> + 3x)<sup>4</sup></span></li>
+                            <li class="key"><span class="step-tag">Turunkan dalam</span><span class="m">2x + 3</span></li>
+                        </ol>
+                        <div class="expr-block final">Jawaban: f'(x) = 5(x<sup>2</sup> + 3x)<sup>4</sup>(2x + 3)</div>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Derivative calculator -->
+            <div class="sim-card calc-card">
+                <div class="sim-head">
+                    <h4>Cek Turunan Anda</h4>
+                    <span class="hint">polinomial</span>
+                </div>
+                <p class="small text-muted" style="margin-bottom:0.75rem;">
+                    Tulis fungsi, lalu lihat turunannya beserta langkah per suku. Gunakan
+                    <span class="m">^</span> untuk pangkat.
+                </p>
+                <div class="calc-row">
+                    <input type="text" id="polyInput" value="3x^4 - 2x^2 + 5x - 7"
+                           aria-label="Masukkan fungsi polinomial"
+                           placeholder="contoh: 2x^3 - 5x + 1">
+                    <button class="btn btn-sm btn-primary" id="polyBtn" type="button">Turunkan</button>
+                </div>
+                <div class="pill-row">
+                    <button class="pill" type="button" data-sample="2x^3 - 5x + 1">2x^3 − 5x + 1</button>
+                    <button class="pill" type="button" data-sample="x^5 + 3x^2 - 4">x^5 + 3x^2 − 4</button>
+                    <button class="pill" type="button" data-sample="x^2 + 1">x^2 + 1</button>
+                </div>
+                <div class="calc-out" id="polyOut" aria-live="polite"></div>
+                <div class="sim-note">
+                    Kalkulator ini hanya menangani polinomial dengan pangkat bilangan bulat
+                    tak negatif. Untuk akar, pecahan, dan aturan rantai, gunakan langkah manual.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 4. APLIKASI ==================== -->
+<section class="section section--alt" id="aplikasi">
+    <div class="container">
+        <div class="section-header">
+            <span class="eyebrow">Bagian 4 · Penerapan</span>
+            <h2>Di Mana Turunan Digunakan?</h2>
+            <p>
+                Turunan bukan hanya alat menghitung. Ia dipakai untuk membaca bentuk grafik,
+                mencari nilai optimum, dan mengukur laju perubahan.
+            </p>
+        </div>
+
+        <div class="legend" aria-label="Keterangan penanda langkah">
+            <span class="lg-title">Cara membaca langkah:</span>
+            <span class="lg-item"><span class="lg-swatch"></span> langkah biasa</span>
+            <span class="lg-item"><span class="lg-swatch key"></span> langkah kunci (sering dilewatkan)</span>
+            <span class="lg-item"><span class="lg-swatch answer"></span> hasil / jawaban</span>
+            <span class="lg-item"><span class="lg-swatch warn"></span> jebakan &amp; cek ulang</span>
+        </div>
+
+        <div class="stack">
+
+            <!-- 4.1 Garis singgung -->
+            <article class="topic">
+                <h3><span class="topic-num">1</span> Garis Singgung &amp; Garis Normal</h3>
+                <p>
+                    Gradien garis singgung kurva <span class="m">y = f(x)</span> di titik
+                    <span class="m">x = a</span> adalah <span class="m">m = f'(a)</span>.
+                    Persamaannya:
+                </p>
+                <div class="expr-block">y − f(a) = f'(a) · (x − a)</div>
+                <p class="small">
+                    Garis normal adalah garis yang tegak lurus garis singgung di titik yang
+                    sama, sehingga gradiennya <span class="m">−1 / f'(a)</span>.
+                </p>
+
+                <details class="example" style="margin-top:1rem;">
+                    <summary>Contoh: f(x) = x² − 4x + 3 di x = 3</summary>
+                    <div class="example-body">
+                        <ol class="steps">
+                            <li>
+                                <span class="step-tag">Nilai fungsi</span>
+                                <span class="m">f(3) = 9 − 12 + 3 = 0</span> → titik singgung <strong>(3, 0)</strong>.
+                            </li>
+                            <li class="key">
+                                <span class="step-tag">Turunan</span>
+                                <span class="m">f'(x) = 2x − 4</span>
+                                <span class="step-why">Turunan ini belum jadi jawaban — ia baru “mesin” untuk mencari gradien.</span>
+                            </li>
+                            <li class="key">
+                                <span class="step-tag">Gradien</span>
+                                Substitusi x = 3: <span class="m">m = f'(3) = 2</span>.
+                                <span class="step-why">Inilah inti soal garis singgung: angka 2 adalah gradien yang dipakai di persamaan garis.</span>
+                            </li>
+                            <li><span class="step-tag">Susun</span><span class="m">y − 0 = 2(x − 3)</span></li>
+                            <li class="warn">
+                                <span class="step-tag">Normal</span>
+                                Gradien normal <span class="m">−1/2</span>, bukan 2.
+                                <span class="step-why">Karena tegak lurus: m normal = −1/f'(3). Cek: 2 × (−½) = −1 ✔</span>
+                            </li>
+                        </ol>
+                        <div class="expr-block final">Jawaban:<br>Garis singgung: y = 2x − 6<br>Garis normal: y = −½(x − 3) = −½x + 1,5</div>
+                    </div>
+                </details>
+            </article>
+
+            <!-- 4.2 Naik / turun -->
+            <article class="topic">
+                <h3><span class="topic-num">2</span> Fungsi Naik &amp; Fungsi Turun</h3>
+                <p>
+                    Tanda turunan pertama memberi tahu arah grafik:
+                    <span class="m">f'(x) &gt; 0</span> → fungsi <strong>naik</strong>;
+                    <span class="m">f'(x) &lt; 0</span> → fungsi <strong>turun</strong>;
+                    <span class="m">f'(x) = 0</span> → kandidat titik stasioner.
+                </p>
+
+                <div class="split">
+                    <div>
+                        <p class="small fw-600" style="margin-bottom:0.25rem;">Contoh: f(x) = x³ − 3x</p>
+                        <ol class="steps">
+                            <li class="key">
+                                <span class="step-tag">Turunan</span>
+                                <span class="m">f'(x) = 3x<sup>2</sup> − 3 = 3(x − 1)(x + 1)</span>
+                                <span class="step-why">Bentuk faktor memudahkan melihat kapan f'(x) = 0.</span>
+                            </li>
+                            <li><span class="step-tag">Titik kritis</span>Pembuat nol: <span class="m">x = −1</span> dan <span class="m">x = 1</span>.</li>
+                            <li class="key">
+                                <span class="step-tag">Uji tanda</span>
+                                Ambil satu nilai x di tiap daerah, lalu tentukan tanda f'(x).
+                                <span class="step-why">Tanda turunan inilah yang menentukan naik atau turun — bukan nilai f(x).</span>
+                            </li>
+                        </ol>
+                        <table class="sign">
+                            <thead>
+                                <tr><th>Interval</th><th>x &lt; −1</th><th>−1 &lt; x &lt; 1</th><th>x &gt; 1</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Tanda f'(x)</td><td class="pos">+</td><td class="neg">−</td><td class="pos">+</td></tr>
+                                <tr><td>Sifat</td><td>naik</td><td>turun</td><td>naik</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="expr-block final" style="white-space:normal;">
+                            Jawaban: naik pada <span class="m">x &lt; −1</span> atau
+                            <span class="m">x &gt; 1</span>; turun pada
+                            <span class="m">−1 &lt; x &lt; 1</span>.
+                        </div>
+                    </div>
+
+                    <div class="sim-card">
+                        <div class="sim-head">
+                            <h4>Simulasi Naik / Turun</h4>
+                            <select id="monoSelect" aria-label="Pilih fungsi">
+                                <option value="0">f(x) = x² − 4x + 3</option>
+                                <option value="1" selected>f(x) = x³ − 3x</option>
+                                <option value="2">f(x) = −x³ + 3x²</option>
+                            </select>
+                        </div>
+                        <canvas id="monoCanvas" width="480" height="330"></canvas>
+                        <div class="readout" id="monoReadout"></div>
+                        <div class="sim-note" style="margin-top:0.45rem;">
+                            Warna garis: <span style="color:#0d7377;font-weight:600;">teal = naik</span>,
+                            <span style="color:#dc2626;font-weight:600;">merah = turun</span>,
+                            titik emas = stasioner.
+                        </div>
+                        <div class="sim-note" id="monoNote"></div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 4.3 Stasioner -->
+            <article class="topic">
+                <h3><span class="topic-num">3</span> Titik Stasioner &amp; Uji Turunan Kedua</h3>
+                <p>
+                    Titik stasioner terjadi saat <span class="m">f'(x) = 0</span>. Jenisnya
+                    ditentukan oleh turunan kedua:
+                </p>
+                <div class="table-wrap" style="margin:1rem 0;">
+                    <table class="rules rules-stack" style="min-width:520px;">
+                        <thead>
+                            <tr><th>Uji</th><th>Kesimpulan</th><th>Bentuk grafik</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="formula">f''(a) &lt; 0</td><td>Maksimum lokal di x = a</td><td>Puncak (∩)</td></tr>
+                            <tr><td class="formula">f''(a) &gt; 0</td><td>Minimum lokal di x = a</td><td>Lembah (∪)</td></tr>
+                            <tr><td class="formula">f''(a) = 0</td><td>Uji tidak konklusif</td><td>Perlu uji tanda f'</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="small fw-600" style="margin-bottom:0.25rem;">Contoh: f(x) = x³ − 3x</p>
+                <ol class="steps">
+                    <li class="key">
+                        <span class="step-tag">Cari stasioner</span>
+                        <span class="m">f'(x) = 3x<sup>2</sup> − 3 = 0 → x = ±1</span>
+                    </li>
+                    <li class="key">
+                        <span class="step-tag">Turunan kedua</span>
+                        <span class="m">f''(x) = 6x</span>, lalu substitusi:
+                        <span class="m">f''(−1) = −6</span> dan <span class="m">f''(1) = 6</span>.
+                        <span class="step-why">Turunkan f'(x) sekali lagi, baru masukkan nilai x stasioner.</span>
+                    </li>
+                    <li class="answer">
+                        <span class="step-tag">Simpulkan</span>
+                        f'' &lt; 0 → maksimum; f'' &gt; 0 → minimum.
+                    </li>
+                </ol>
+                <div class="expr-block final">Jawaban:<br>f(−1) = 2 → maksimum lokal di (−1, 2)<br>f(1) = −2 → minimum lokal di (1, −2)</div>
+                <div class="note-box">
+                    <p>
+                        <strong>Hati-hati:</strong> <span class="m">f'(x) = 0</span> tidak selalu
+                        berarti maksimum atau minimum. Contoh <span class="m">f(x) = x³</span>:
+                        <span class="m">f'(0) = 0</span>, tetapi <span class="m">f''(0) = 0</span>
+                        dan grafiknya tetap naik — itu titik belok, bukan titik ekstrem.
+                    </p>
+                </div>
+            </article>
+
+            <!-- 4.4 Max/min interval -->
+            <article class="topic">
+                <h3><span class="topic-num">4</span> Nilai Maksimum &amp; Minimum pada Interval Tertutup</h3>
+                <p>
+                    Pada interval <span class="m">[a, b]</span>, nilai maksimum/minimum bisa
+                    terjadi di titik stasioner <strong>atau</strong> di kedua ujung interval.
+                    Karena itu, selalu periksa keduanya.
+                </p>
+                <p class="small fw-600" style="margin-bottom:0.25rem;">
+                    Contoh: f(x) = x³ − 3x pada [−2, 2]
+                </p>
+                <ol class="steps">
+                    <li class="key">
+                        <span class="step-tag">Stasioner</span>
+                        <span class="m">f'(x) = 3x<sup>2</sup> − 3 = 0 → x = ±1</span>
+                    </li>
+                    <li class="warn">
+                        <span class="step-tag">Ujung interval</span>
+                        Hitung nilai di <strong>semua</strong> kandidat:
+                        <span class="m">f(−2) = −2</span>, <span class="m">f(−1) = 2</span>,
+                        <span class="m">f(1) = −2</span>, <span class="m">f(2) = 2</span>.
+                        <span class="step-why">Nilai ekstrem pada interval tertutup bisa terjadi di ujung interval, bukan hanya di titik stasioner.</span>
+                    </li>
+                    <li class="answer">
+                        <span class="step-tag">Bandingkan</span>
+                        Pilih nilai terbesar dan terkecil dari seluruh kandidat.
+                    </li>
+                </ol>
+                <div class="expr-block final">Jawaban:<br>Nilai maksimum = 2 (di x = −1 dan x = 2)<br>Nilai minimum = −2 (di x = −2 dan x = 1)</div>
+                <p class="small text-muted" style="margin-bottom:0;">
+                    Perhatikan: nilai maksimum juga muncul di ujung interval x = 2. Kalau hanya
+                    memeriksa titik stasioner, kesimpulannya bisa kurang lengkap.
+                </p>
+            </article>
+
+            <!-- 4.5 Laju perubahan -->
+            <article class="topic">
+                <h3><span class="topic-num">5</span> Laju Perubahan &amp; Kinematika</h3>
+                <p>
+                    Jika <span class="m">s(t)</span> menyatakan posisi benda pada waktu t, maka:
+                </p>
+                <div class="expr-block">kecepatan v(t) = s'(t) &nbsp;&nbsp;|&nbsp;&nbsp; percepatan a(t) = v'(t) = s''(t)</div>
+                <p class="small">
+                    Contoh: <span class="m">s(t) = t³ − 6t² + 9t</span> meter, t dalam detik.
+                </p>
+                <div class="split">
+                    <div>
+                        <ol class="steps">
+                            <li class="key">
+                                <span class="step-tag">Kecepatan</span>
+                                <span class="m">v(t) = s'(t) = 3t<sup>2</sup> − 12t + 9 = 3(t − 1)(t − 3)</span>
+                                <span class="step-why">Kecepatan adalah turunan pertama dari posisi.</span>
+                            </li>
+                            <li><span class="step-tag">Percepatan</span><span class="m">a(t) = v'(t) = 6t − 12</span></li>
+                            <li class="key">
+                                <span class="step-tag">Berhenti</span>
+                                Benda berhenti sesaat saat <span class="m">v(t) = 0</span> → t = 1 atau t = 3.
+                                <span class="step-why">“Berhenti” berarti kecepatan nol, bukan percepatan nol.</span>
+                            </li>
+                        </ol>
+                    </div>
+                    <div>
+                        <div class="expr-block" style="margin-top:0;">
+                            s(1) = 4 m, v(1) = 0<br>
+                            s(3) = 0 m, v(3) = 0<br>
+                            v(0) = 9 m/s, v(2) = −3 m/s<br>
+                            a(2) = 0 m/s²
+                        </div>
+                        <p class="small text-muted" style="margin-bottom:0;">
+                            Kecepatan negatif berarti benda bergerak ke arah berlawanan.
+                        </p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 4.6 Ekonomi -->
+            <article class="topic">
+                <h3><span class="topic-num">6</span> Ekonomi: Biaya Marginal</h3>
+                <p>
+                    Jika <span class="m">C(x)</span> adalah total biaya memproduksi x unit,
+                    maka <span class="m">C'(x)</span> adalah <strong>biaya marginal</strong> —
+                    perkiraan biaya tambahan untuk memproduksi satu unit lagi.
+                </p>
+                <p class="small">
+                    Misal <span class="m">C(x) = 0,02x<sup>3</sup> − 0,6x<sup>2</sup> + 50x + 1000</span>
+                    (dalam ribu rupiah). Berapa biaya marginal pada x = 10?
+                </p>
+                <ol class="steps">
+                    <li class="key">
+                        <span class="step-tag">Turunkan</span>
+                        <span class="m">C'(x) = 0,06x<sup>2</sup> − 1,2x + 50</span>
+                        <span class="step-why">Biaya marginal adalah turunan dari biaya total — bukan biaya totalnya dibagi x.</span>
+                    </li>
+                    <li>
+                        <span class="step-tag">Substitusi</span>
+                        <span class="m">C'(10) = 0,06(100) − 1,2(10) + 50</span>
+                    </li>
+                    <li class="answer">
+                        <span class="step-tag">Hitung</span>
+                        <span class="m">= 6 − 12 + 50 = 44</span>
+                    </li>
+                </ol>
+                <div class="expr-block final">Jawaban: C'(10) = 44 ribu rupiah per unit</div>
+                <p class="small text-muted" style="margin-bottom:0;">
+                    Artinya, sekitar 44 ribu rupiah tambahan untuk memproduksi unit ke-11.
+                </p>
+            </article>
+
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 5. LATIHAN MANDIRI ==================== -->
+<section class="section" id="latihan-mandiri">
+    <div class="container">
+        <div class="section-header">
+            <span class="eyebrow">Bagian 5 · Latihan Mandiri</span>
+            <h2>Coba Dulu, Baru Lihat Pembahasan</h2>
+            <p>
+                Kerjakan di kertas terlebih dahulu. Buka pembahasan hanya setelah Anda
+                mendapatkan jawaban sendiri — ini jauh lebih efektif daripada membaca
+                solusi langsung.
+            </p>
+            <p class="small text-muted" style="margin-bottom:0;">
+                Penanda warna sama seperti bagian sebelumnya:
+                <strong style="color:#7c4f00;">emas</strong> = langkah kunci,
+                <strong style="color:#166534;">hijau</strong> = hasil,
+                <strong style="color:#991b1b;">merah</strong> = jebakan.
+            </p>
+        </div>
+
+        <details class="example">
+            <summary>Soal 1 — Turunkan f(x) = 2x⁵ − 3x² + 7x</summary>
+            <div class="example-body">
+                <p class="small text-muted">Aturan: pangkat, kelipatan, jumlah/selisih.</p>
+                <ol class="steps">
+                    <li><span class="step-tag">Pangkat</span><span class="m">2x<sup>5</sup> → 2 · 5x<sup>4</sup> = 10x<sup>4</sup></span></li>
+                    <li><span class="step-tag">Pangkat</span><span class="m">−3x<sup>2</sup> → −3 · 2x = −6x</span></li>
+                    <li><span class="step-tag">Konstanta</span><span class="m">7x → 7</span></li>
+                </ol>
+                <div class="expr-block final">Jawaban: f'(x) = 10x<sup>4</sup> − 6x + 7</div>
+                <p class="small text-muted" style="margin-bottom:0;">
+                    Periksa urutan pangkatnya: 5 → 4, lalu 2 → 1. Suku konstanta akan menjadi 0.
+                </p>
+            </div>
+        </details>
+
+        <details class="example">
+            <summary>Soal 2 — Turunkan f(x) = (3x − 2)⁵</summary>
+            <div class="example-body">
+                <ol class="steps">
+                    <li><span class="step-tag">Kenali</span>Fungsi luar ( )<sup>5</sup>, fungsi dalam <span class="m">3x − 2</span>.</li>
+                    <li class="key">
+                        <span class="step-tag">Turunkan luar</span>
+                        <span class="m">5(3x − 2)<sup>4</sup></span>
+                        <span class="step-why">Isi kurung tidak diubah dulu pada langkah ini.</span>
+                    </li>
+                    <li class="warn">
+                        <span class="step-tag">Jangan lupa</span>
+                        Kalikan dengan turunan dalam: <span class="m">· 3</span>.
+                        <span class="step-why">Tanpa faktor 3, jawaban masih belum selesai.</span>
+                    </li>
+                </ol>
+                <div class="expr-block final">Jawaban: f'(x) = 5(3x − 2)<sup>4</sup> · 3 = 15(3x − 2)<sup>4</sup></div>
+            </div>
+        </details>
+
+        <details class="example">
+            <summary>Soal 3 — Turunkan f(x) = (x² + 1)(2x − 3)</summary>
+            <div class="example-body">
+                <ol class="steps">
+                    <li>
+                        <span class="step-tag">Misalkan</span>
+                        <span class="m">u = x<sup>2</sup> + 1</span> (u' = 2x) dan
+                        <span class="m">v = 2x − 3</span> (v' = 2).
+                    </li>
+                    <li class="key">
+                        <span class="step-tag">Rumus</span>
+                        <span class="m">f' = u'v + uv'</span>
+                        <span class="step-why">Turunan perkalian harus dijumlahkan, bukan dikalikan langsung.</span>
+                    </li>
+                    <li><span class="step-tag">Substitusi</span><span class="m">= 2x(2x − 3) + (x<sup>2</sup> + 1)(2)</span></li>
+                    <li><span class="step-tag">Sederhanakan</span><span class="m">= 4x<sup>2</sup> − 6x + 2x<sup>2</sup> + 2</span></li>
+                </ol>
+                <div class="expr-block final">Jawaban: f'(x) = 6x<sup>2</sup> − 6x + 2</div>
+                <p class="small text-muted" style="margin-bottom:0;">
+                    Cek dengan menjabarkan: <span class="m">f(x) = 2x<sup>3</sup> − 3x<sup>2</sup> + 2x − 3</span>
+                    → turunannya <span class="m">6x<sup>2</sup> − 6x + 2</span>. Cocok.
+                </p>
+            </div>
+        </details>
+
+        <details class="example">
+            <summary>Soal 4 — Turunkan f(x) = (2x + 1)/(x − 3)</summary>
+            <div class="example-body">
+                <ol class="steps">
+                    <li>
+                        <span class="step-tag">Misalkan</span>
+                        <span class="m">u = 2x + 1</span> (u' = 2) dan
+                        <span class="m">v = x − 3</span> (v' = 1).
+                    </li>
+                    <li class="key">
+                        <span class="step-tag">Rumus</span>
+                        <span class="m">f' = (u'v − uv') / v<sup>2</sup></span>
+                    </li>
+                    <li class="warn">
+                        <span class="step-tag">Jebakan</span>
+                        Penyebut dikuadratkan: <span class="m">(x − 3)<sup>2</sup></span>.
+                        <span class="step-why">Bukan (x − 3) saja.</span>
+                    </li>
+                    <li><span class="step-tag">Substitusi</span><span class="m">= [2(x − 3) − (2x + 1)(1)] / (x − 3)<sup>2</sup></span></li>
+                    <li><span class="step-tag">Sederhanakan</span><span class="m">= (2x − 6 − 2x − 1) / (x − 3)<sup>2</sup></span></li>
+                </ol>
+                <div class="expr-block final">Jawaban: f'(x) = −7 / (x − 3)<sup>2</sup></div>
+            </div>
+        </details>
+
+        <details class="example">
+            <summary>Soal 5 — Tentukan interval naik/turun dan titik stasioner f(x) = x³ − 6x² + 9x</summary>
+            <div class="example-body">
+                <ol class="steps">
+                    <li class="key">
+                        <span class="step-tag">Turunan</span>
+                        <span class="m">f'(x) = 3x<sup>2</sup> − 12x + 9 = 3(x − 1)(x − 3)</span>
+                    </li>
+                    <li><span class="step-tag">Titik kritis</span>Pembuat nol: <span class="m">x = 1</span> dan <span class="m">x = 3</span>.</li>
+                    <li class="key">
+                        <span class="step-tag">Uji tanda</span>
+                        Naik pada <span class="m">x &lt; 1</span> atau <span class="m">x &gt; 3</span>;
+                        turun pada <span class="m">1 &lt; x &lt; 3</span>.
+                        <span class="step-why">Kesimpulan naik/turun diambil dari tanda f'(x), bukan dari nilai f(x).</span>
+                    </li>
+                    <li class="answer">
+                        <span class="step-tag">Nilai</span>
+                        <span class="m">f(1) = 4</span> (maksimum), <span class="m">f(3) = 0</span> (minimum).
+                    </li>
+                </ol>
+                <div class="expr-block final">Jawaban: maksimum lokal di (1, 4), minimum lokal di (3, 0)</div>
+            </div>
+        </details>
+
+        <details class="example">
+            <summary>Soal 6 — Tentukan garis singgung f(x) = x³ − 2x di x = 1</summary>
+            <div class="example-body">
+                <ol class="steps">
+                    <li>
+                        <span class="step-tag">Nilai fungsi</span>
+                        <span class="m">f(1) = 1 − 2 = −1</span> → titik singgung (1, −1).
+                    </li>
+                    <li class="key">
+                        <span class="step-tag">Gradien</span>
+                        <span class="m">f'(x) = 3x<sup>2</sup> − 2 → f'(1) = 1</span>
+                        <span class="step-why">Angka 1 inilah gradien yang masuk ke persamaan garis — bukan f(1) = −1.</span>
+                    </li>
+                    <li>
+                        <span class="step-tag">Susun</span>
+                        <span class="m">y − (−1) = 1(x − 1)</span>
+                    </li>
+                </ol>
+                <div class="expr-block final">Jawaban: y = x − 2</div>
+            </div>
+        </details>
+    </div>
+</section>
+
+<!-- ==================== 6. KUIS ==================== -->
+<section class="section section--dark" id="latihan">
+    <div class="container">
+        <div class="section-header">
+            <span class="eyebrow">Bagian 6 · Kuis</span>
+            <h2>Uji Pemahaman</h2>
+            <p>
+                12 soal mencakup seluruh bagian. Pilih satu jawaban, tekan
+                <strong>Periksa Jawaban</strong>, lalu baca pembahasannya.
+            </p>
+        </div>
+
+        <div class="card quiz-card" style="background: var(--opera-white); color: var(--ocean-ink);">
+            <div class="quiz-bar"><span id="quizBar"></span></div>
+            <div class="quiz-question" id="quizQuestion"></div>
+            <div class="quiz-options" id="quizOptions"></div>
+            <div class="quiz-feedback" id="quizFeedback"></div>
+            <div class="quiz-nav">
+                <span class="quiz-progress" id="quizProgress"></span>
+                <div class="quiz-actions">
+                    <button class="btn btn-sm btn-gold" id="quizCheck" type="button" style="display:none;">Periksa Jawaban</button>
+                    <button class="btn btn-sm btn-primary" id="quizNext" type="button">Soal Berikutnya →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== 7. RINGKASAN ==================== -->
+<section class="section" id="ringkasan">
+    <div class="container">
+        <div class="section-header">
+            <span class="eyebrow">Bagian 7 · Ringkasan</span>
+            <h2>Ringkasan &amp; Kesalahan Umum</h2>
+            <p>
+                Simpan bagian ini untuk pengulangan cepat sebelum ulangan.
+            </p>
+        </div>
+
+        <h3 style="margin-bottom:1rem;">Lembar Rumus</h3>
+        <div class="cheat-grid mb-3">
+            <div class="cheat">
+                <h4>Konstanta</h4>
+                <div class="eq">f(x) = c → f'(x) = 0</div>
+            </div>
+            <div class="cheat">
+                <h4>Pangkat</h4>
+                <div class="eq">x<sup>n</sup> → n·x<sup>n−1</sup></div>
+            </div>
+            <div class="cheat">
+                <h4>Kelipatan</h4>
+                <div class="eq">c·u → c·u'</div>
+            </div>
+            <div class="cheat">
+                <h4>Jumlah / selisih</h4>
+                <div class="eq">u ± v → u' ± v'</div>
+            </div>
+            <div class="cheat">
+                <h4>Perkalian</h4>
+                <div class="eq">u·v → u'v + uv'</div>
+            </div>
+            <div class="cheat">
+                <h4>Pembagian</h4>
+                <div class="eq">u/v → (u'v − uv')/v²</div>
+            </div>
+            <div class="cheat">
+                <h4>Rantai</h4>
+                <div class="eq">f(g(x)) → f'(g(x))·g'(x)</div>
+            </div>
+            <div class="cheat">
+                <h4>Akar &amp; pecahan</h4>
+                <div class="eq">√x → 1/(2√x); 1/x² → −2/x³</div>
+            </div>
+            <div class="cheat">
+                <h4>Garis singgung</h4>
+                <div class="eq">y − f(a) = f'(a)(x − a)</div>
+            </div>
+            <div class="cheat">
+                <h4>Stasioner</h4>
+                <div class="eq">f'(x) = 0; jenis via f''(x)</div>
+            </div>
+        </div>
+
+        <h3 style="margin:2.5rem 0 1rem;">Kesalahan yang Sering Terjadi</h3>
+        <div class="mistake-grid mb-3">
+            <div class="mistake">
+                <div class="row"><span class="ico x">✗</span><span class="txt">Turunan (2x + 1)⁴ = 4(2x + 1)³</span></div>
+                <div class="row"><span class="ico v">✓</span><span class="txt">= 8(2x + 1)³ — kalikan turunan dalam.</span></div>
+            </div>
+            <div class="mistake">
+                <div class="row"><span class="ico x">✗</span><span class="txt">Turunan x²(3x + 1) = (2x)(3) = 6x</span></div>
+                <div class="row"><span class="ico v">✓</span><span class="txt">Gunakan u'v + uv' → 9x² + 2x.</span></div>
+            </div>
+            <div class="mistake">
+                <div class="row"><span class="ico x">✗</span><span class="txt">Turunan u/v = (u'v − uv')/v</span></div>
+                <div class="row"><span class="ico v">✓</span><span class="txt">Penyebut dikuadratkan: v².</span></div>
+            </div>
+            <div class="mistake">
+                <div class="row"><span class="ico x">✗</span><span class="txt">Turunan 5 = 5</span></div>
+                <div class="row"><span class="ico v">✓</span><span class="txt">Turunan konstanta selalu 0.</span></div>
+            </div>
+            <div class="mistake">
+                <div class="row"><span class="ico x">✗</span><span class="txt">f'(a) = 0 pasti titik maksimum</span></div>
+                <div class="row"><span class="ico v">✓</span><span class="txt">Bisa minimum atau titik belok; uji dengan f'' atau tanda f'.</span></div>
+            </div>
+            <div class="mistake">
+                <div class="row"><span class="ico x">✗</span><span class="txt">Turunan √x = 2√x</span></div>
+                <div class="row"><span class="ico v">✓</span><span class="txt">√x = x^(1/2) → 1/(2√x).</span></div>
+            </div>
+        </div>
+
+        <h3 style="margin:2.5rem 0 1rem;">Glosarium</h3>
+        <dl class="glossary">
+            <div class="gloss-item">
+                <dt>Turunan</dt>
+                <dd>Nilai limit gradien secan saat jarak dua titik menuju nol; gradien garis singgung.</dd>
+            </div>
+            <div class="gloss-item">
+                <dt>Garis secan</dt>
+                <dd>Garis yang melalui dua titik pada kurva.</dd>
+            </div>
+            <div class="gloss-item">
+                <dt>Garis singgung</dt>
+                <dd>Garis yang menyentuh kurva di satu titik dan searah dengan kurva di titik itu.</dd>
+            </div>
+            <div class="gloss-item">
+                <dt>Diferensial</dt>
+                <dd>Istilah lain untuk turunan; juga merujuk pada proses menurunkan fungsi.</dd>
+            </div>
+            <div class="gloss-item">
+                <dt>Titik stasioner</dt>
+                <dd>Titik dengan f'(x) = 0; kandidat maksimum, minimum, atau titik belok.</dd>
+            </div>
+            <div class="gloss-item">
+                <dt>Maksimum lokal</dt>
+                <dd>Nilai tertinggi di sekitar titik tersebut, belum tentu tertinggi keseluruhan.</dd>
+            </div>
+            <div class="gloss-item">
+                <dt>Laju perubahan</dt>
+                <dd>Seberapa cepat nilai fungsi berubah terhadap perubahan variabel bebas.</dd>
+            </div>
+            <div class="gloss-item">
+                <dt>Biaya marginal</dt>
+                <dd>Turunan fungsi biaya total; perkiraan biaya tambahan per unit.</dd>
+            </div>
+        </dl>
+
+        <div class="highlight-box mt-4" style="text-align:center;">
+            <h3 style="margin-bottom:0.4rem;">Sudah selesai?</h3>
+            <p class="small" style="margin-bottom:1rem;">
+                Ulangi kuis sampai skor Anda konsisten di atas 80%, lalu coba kerjakan
+                latihan mandiri tanpa membuka pembahasan.
+            </p>
+            <a href="#latihan" class="btn btn-primary btn-sm">Ulangi Kuis</a>
+            <a href="#atas" class="btn btn-outline btn-sm">Kembali ke Atas ↑</a>
+        </div>
+    </div>
+</section>
+
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <h4>Turunan Fungsi Aljabar</h4>
+                <p style="font-size:0.85rem; line-height:1.7;">
+                    Materi visual interaktif yang disusun ulang dari artikel Ruangguru,
+                    dilengkapi simulasi, contoh bertahap, latihan mandiri, dan kuis.
+                    Dibuat untuk membantu siswa memahami turunan dari definisi limit
+                    hingga penerapannya.
+                </p>
+                <p style="font-size:0.78rem; color:#64748b; margin-bottom:0;">
+                    Disusun dari artikel
+                    <a href="https://www.ruangguru.com/blog/turunan-fungsi-aljabar"
+                       target="_blank" rel="noopener">Ruangguru ↗</a>
+                    · referensi tambahan Medcom.id
+                </p>
+            </div>
+            <div>
+                <h4>Navigasi</h4>
+                <p><a href="#konsep">Konsep</a></p>
+                <p><a href="#rumus">Aturan Turunan</a></p>
+                <p><a href="#teknik">Contoh Bertahap</a></p>
+                <p><a href="#aplikasi">Penerapan</a></p>
+                <p><a href="#latihan">Kuis</a></p>
+            </div>
+            <div>
+                <h4>Materi Terkait</h4>
+                <p>
+                    <a href="limit.html">Limit Fungsi Aljabar ↗</a>
+                </p>
+                <p style="font-size:0.8rem; color:#64748b;">
+                    Turunan didefinisikan melalui limit. Pelajari limit lebih dulu
+                    bila konsepnya belum kuat.
+                </p>
+                <p style="margin-bottom:0;">
+                    <a href="index.html">← Beranda materi</a>
+                </p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 Materi Interaktif Turunan Aljabar</span>
+            <span>Dibuat dengan HTML, CSS, dan JavaScript</span>
+        </div>
+    </div>
+</footer>
+
+<script>
+/* ============================================================
+   EFEK SUARA (Web Audio API — tanpa file audio eksternal)
+   ============================================================ */
+const Sound = (function () {
+    const STORE_KEY = 'tfa_sound_enabled';
+    let enabled = true;
+    try {
+        if (localStorage.getItem(STORE_KEY) === 'off') enabled = false;
+    } catch (e) { /* localStorage bisa diblokir di beberapa browser */ }
+
+    let ctx = null;
+    let master = null;
+    let lastPlay = 0;
+    let userActivated = false;
+
+    function activate() {
+        if (userActivated) return;
+        userActivated = true;
+        if (enabled) init();
+    }
+
+    function init() {
+        if (ctx) return true;
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) {
+            enabled = false;
+            syncButton();
+            return false;
+        }
+        try {
+            ctx = new AC();
+            const comp = ctx.createDynamicsCompressor();
+            comp.threshold.value = -22;
+            comp.knee.value = 24;
+            comp.ratio.value = 10;
+            comp.attack.value = 0.003;
+            comp.release.value = 0.25;
+            master = ctx.createGain();
+            master.gain.value = 0.3;
+            master.connect(comp);
+            comp.connect(ctx.destination);
+        } catch (e) {
+            ctx = null;
+            enabled = false;
+            syncButton();
+            return false;
+        }
+        return true;
+    }
+
+    function tone(freq, at, dur, opts) {
+        if (!ctx || !master) return;
+        opts = opts || {};
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        const peak = opts.gain == null ? 0.15 : opts.gain;
+        osc.type = opts.type || 'sine';
+        osc.frequency.setValueAtTime(freq, at);
+        g.gain.setValueAtTime(0.0001, at);
+        g.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), at + 0.012);
+        g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+        osc.connect(g);
+        g.connect(master);
+        osc.start(at);
+        osc.stop(at + dur + 0.03);
+    }
+
+    const recipes = {
+        tick: function (t) {
+            tone(620, t, 0.05, { type: 'triangle', gain: 0.16 });
+        },
+        select: function (t) {
+            tone(520, t, 0.055, { type: 'sine', gain: 0.18 });
+            tone(780, t + 0.045, 0.055, { type: 'sine', gain: 0.09 });
+        },
+        open: function (t) {
+            tone(392, t, 0.08, { type: 'triangle', gain: 0.16 });
+            tone(587.33, t + 0.07, 0.12, { type: 'sine', gain: 0.14 });
+        },
+        close: function (t) {
+            tone(523.25, t, 0.06, { type: 'sine', gain: 0.13 });
+            tone(392, t + 0.055, 0.09, { type: 'sine', gain: 0.11 });
+        },
+        pop: function (t) {
+            tone(440, t, 0.05, { type: 'sine', gain: 0.16 });
+            tone(660, t + 0.05, 0.09, { type: 'sine', gain: 0.14 });
+        },
+        mark: function (t) {
+            tone(740, t, 0.05, { type: 'triangle', gain: 0.15 });
+        },
+        calc: function (t) {
+            tone(587.33, t, 0.07, { type: 'triangle', gain: 0.16 });
+            tone(880, t + 0.06, 0.09, { type: 'sine', gain: 0.14 });
+        },
+        correct: function (t) {
+            const notes = [523.25, 659.25, 783.99, 1046.5];
+            notes.forEach(function (f, i) {
+                tone(f, t + i * 0.075, i === notes.length - 1 ? 0.28 : 0.14, {
+                    type: 'sine', gain: 0.18
+                });
+            });
+        },
+        wrong: function (t) {
+            tone(233.08, t, 0.14, { type: 'triangle', gain: 0.14 });
+            tone(174.61, t + 0.13, 0.22, { type: 'triangle', gain: 0.12 });
+        },
+        nudge: function (t) {
+            tone(329.63, t, 0.08, { type: 'triangle', gain: 0.1 });
+            tone(293.66, t + 0.08, 0.12, { type: 'triangle', gain: 0.09 });
+        },
+        finish: function (t) {
+            const notes = [523.25, 659.25, 783.99, 1046.5];
+            notes.forEach(function (f, i) {
+                tone(f, t + i * 0.1, i === notes.length - 1 ? 0.55 : 0.18, {
+                    type: 'sine', gain: 0.2
+                });
+            });
+            tone(1318.51, t + 0.3, 0.5, { type: 'sine', gain: 0.08 });
+        },
+        complete: function (t) {
+            const notes = [392, 523.25, 659.25];
+            notes.forEach(function (f, i) {
+                tone(f, t + i * 0.09, i === notes.length - 1 ? 0.3 : 0.15, {
+                    type: 'sine', gain: 0.15
+                });
+            });
+        },
+        on: function (t) {
+            tone(523.25, t, 0.08, { type: 'sine', gain: 0.15 });
+            tone(783.99, t + 0.07, 0.14, { type: 'sine', gain: 0.15 });
+        },
+        off: function (t) {
+            tone(523.25, t, 0.07, { type: 'sine', gain: 0.13 });
+            tone(349.23, t + 0.06, 0.12, { type: 'sine', gain: 0.11 });
+        }
+    };
+
+    const IMPORTANT = { correct: 1, wrong: 1, finish: 1, complete: 1, calc: 1, nudge: 1, on: 1, off: 1 };
+
+    function play(name) {
+        if (!enabled || !userActivated || !recipes[name]) return;
+        if (!init()) return;
+        if (ctx.state === 'suspended') {
+            ctx.resume().catch(function () {});
+        }
+        const now = performance.now();
+        if (!IMPORTANT[name] && now - lastPlay < 45) return;
+        lastPlay = now;
+        try {
+            recipes[name](ctx.currentTime + 0.01);
+        } catch (e) { /* jangan sampai audio mengganggu interaksi */ }
+    }
+
+    function syncButton() {
+        const btn = document.getElementById('soundToggle');
+        if (!btn) return;
+        btn.setAttribute('aria-pressed', enabled ? 'true' : 'false');
+        btn.setAttribute('aria-label', enabled
+            ? 'Efek suara aktif. Klik untuk mematikan.'
+            : 'Efek suara mati. Klik untuk mengaktifkan.');
+        btn.title = enabled
+            ? 'Efek suara aktif — klik untuk mematikan'
+            : 'Efek suara mati — klik untuk mengaktifkan';
+    }
+
+    function setEnabled(value) {
+        enabled = !!value;
+        try {
+            localStorage.setItem(STORE_KEY, enabled ? 'on' : 'off');
+        } catch (e) { /* abaikan */ }
+        syncButton();
+        play(enabled ? 'on' : 'off');
+    }
+
+    function bindButton() {
+        const btn = document.getElementById('soundToggle');
+        if (!btn) return;
+        syncButton();
+        btn.addEventListener('click', function () {
+            if (enabled) {
+                play('off');
+                enabled = false;
+                try { localStorage.setItem(STORE_KEY, 'off'); } catch (e) {}
+                syncButton();
+            } else {
+                enabled = true;
+                try { localStorage.setItem(STORE_KEY, 'on'); } catch (e) {}
+                syncButton();
+                play('on');
+            }
+        });
+    }
+
+    function bindInteractions() {
+        // Buka/tutup contoh bertahap
+        document.addEventListener('toggle', function (e) {
+            const d = e.target;
+            if (!d || d.tagName !== 'DETAILS') return;
+            play(d.open ? 'open' : 'close');
+        }, true);
+
+        // Klik navigasi internal
+        document.addEventListener('click', function (e) {
+            const a = e.target.closest && e.target.closest('a[href^="#"]');
+            if (a) play('tick');
+        });
+
+        // Slider dan pilihan simulasi: satu bunyi saat nilai dilepas
+        document.addEventListener('change', function (e) {
+            const el = e.target;
+            if (!el || !el.matches) return;
+            if (el.matches('input[type="range"]') || el.matches('#monoSelect')) {
+                play('tick');
+            }
+        });
+
+        // Tandai rumus
+        document.querySelectorAll('[data-formula]').forEach(function (item) {
+            item.addEventListener('click', function () {
+                play(this.dataset.marked === 'true' ? 'close' : 'mark');
+            });
+        });
+    }
+
+    bindButton();
+    bindInteractions();
+    window.addEventListener('pointerdown', activate, { once: true, capture: true });
+    window.addEventListener('keydown', activate, { once: true, capture: true });
+
+    return { play: play, setEnabled: setEnabled, isEnabled: function () { return enabled; } };
+})();
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function prepareCanvas(canvas, ratio) {
+    const cssW = canvas.clientWidth || 480;
+    const cssH = Math.round(cssW * ratio);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const pw = Math.round(cssW * dpr);
+    const ph = Math.round(cssH * dpr);
+    if (canvas.width !== pw || canvas.height !== ph) {
+        canvas.width = pw;
+        canvas.height = ph;
+    }
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, cssW, cssH);
+    return { ctx: ctx, W: cssW, H: cssH };
+}
+
+function niceStep(range, target) {
+    const raw = range / target;
+    const pow = Math.pow(10, Math.floor(Math.log10(raw)));
+    const mult = raw / pow;
+    let step;
+    if (mult < 1.5) step = 1;
+    else if (mult < 3.5) step = 2;
+    else if (mult < 7.5) step = 5;
+    else step = 10;
+    return step * pow;
+}
+
+function fmt(n) {
+    if (Math.abs(n) < 1e-9) return '0';
+    const r = Math.round(n * 100) / 100;
+    return String(r);
+}
+
+function drawAxes(ctx, map, W, H) {
+    const pad = { top: 18, right: 18, bottom: 30, left: 38 };
+    const plotW = W - pad.left - pad.right;
+    const plotH = H - pad.top - pad.bottom;
+    const xRange = map.xMax - map.xMin;
+    const yRange = map.yMax - map.yMin;
+
+    const X = x => pad.left + ((x - map.xMin) / xRange) * plotW;
+    const Y = y => pad.top + ((map.yMax - y) / yRange) * plotH;
+
+    // grid
+    const gx = niceStep(xRange, 6);
+    const gy = niceStep(yRange, 6);
+    ctx.strokeStyle = '#e8edf3';
+    ctx.lineWidth = 1;
+    for (let x = Math.ceil(map.xMin / gx) * gx; x <= map.xMax + 1e-9; x += gx) {
+        ctx.beginPath();
+        ctx.moveTo(X(x), pad.top);
+        ctx.lineTo(X(x), H - pad.bottom);
+        ctx.stroke();
+    }
+    for (let y = Math.ceil(map.yMin / gy) * gy; y <= map.yMax + 1e-9; y += gy) {
+        ctx.beginPath();
+        ctx.moveTo(pad.left, Y(y));
+        ctx.lineTo(W - pad.right, Y(y));
+        ctx.stroke();
+    }
+
+    // axes
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 1.4;
+    if (map.yMin < 0 && map.yMax > 0) {
+        ctx.beginPath();
+        ctx.moveTo(pad.left, Y(0));
+        ctx.lineTo(W - pad.right, Y(0));
+        ctx.stroke();
+    }
+    if (map.xMin < 0 && map.xMax > 0) {
+        ctx.beginPath();
+        ctx.moveTo(X(0), pad.top);
+        ctx.lineTo(X(0), H - pad.bottom);
+        ctx.stroke();
+    }
+
+    // tick labels
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '11px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    const y0 = (map.yMin < 0 && map.yMax > 0) ? Y(0) : H - pad.bottom;
+    for (let x = Math.ceil(map.xMin / gx) * gx; x <= map.xMax + 1e-9; x += gx) {
+        if (Math.abs(x) < 1e-9) continue;
+        ctx.fillText(fmt(x), X(x), Math.min(y0 + 14, H - pad.bottom + 14));
+    }
+    ctx.textAlign = 'right';
+    const xAxisPos = (map.xMin < 0 && map.xMax > 0) ? X(0) : pad.left;
+    for (let y = Math.ceil(map.yMin / gy) * gy; y <= map.yMax + 1e-9; y += gy) {
+        if (Math.abs(y) < 1e-9) continue;
+        ctx.fillText(fmt(y), xAxisPos - 6, Y(y) + 4);
+    }
+
+    // axis names
+    ctx.fillStyle = '#6b7280';
+    ctx.font = '600 12px Inter, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('x', W - pad.right - 4, y0 - 6);
+    ctx.fillText('y', xAxisPos + 6, pad.top + 10);
+
+    return { X: X, Y: Y, pad: pad, plotW: plotW, plotH: plotH };
+}
+
+function drawCurve(ctx, map, geom, f, color, width) {
+    const { X, Y, pad, plotW } = geom;
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(pad.left, pad.top, plotW, geom.plotH);
+    ctx.clip();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = width || 2.5;
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    let started = false;
+    const steps = Math.max(200, Math.round(plotW));
+    for (let i = 0; i <= steps; i++) {
+        const x = map.xMin + (i / steps) * (map.xMax - map.xMin);
+        const y = f(x);
+        if (!isFinite(y) || y < map.yMin - 1 || y > map.yMax + 1) {
+            started = false;
+            continue;
+        }
+        const px = X(x), py = Y(y);
+        if (!started) { ctx.moveTo(px, py); started = true; }
+        else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    ctx.restore();
+}
+
+/* ============================================================
+   1. SECAN -> TANGENT SIMULATOR
+   ============================================================ */
+(function () {
+    const canvas = document.getElementById('secanCanvas');
+    if (!canvas) return;
+    const pointSlider = document.getElementById('pointSlider');
+    const hSlider = document.getElementById('hSlider');
+    const pointLabel = document.getElementById('pointLabel');
+    const hLabel = document.getElementById('hLabel');
+    const secanSlope = document.getElementById('secanSlope');
+    const tangentSlope = document.getElementById('tangentSlope');
+    const readout = document.getElementById('secanSlopeVal');
+
+    const map = { xMin: -2.6, xMax: 3.6, yMin: -1.5, yMax: 10.5 };
+    const f = x => x * x;
+    const df = x => 2 * x;
+
+    function draw() {
+        const p = prepareCanvas(canvas, 400 / 560);
+        const ctx = p.ctx;
+        const geom = drawAxes(ctx, map, p.W, p.H);
+        const { X, Y, pad } = geom;
+
+        drawCurve(ctx, map, geom, f, '#1e3a5f', 2.5);
+
+        const a = parseFloat(pointSlider.value);
+        const h = parseFloat(hSlider.value);
+        const x1 = a, y1 = f(a);
+        const x2 = a + h, y2 = f(x2);
+        const mSec = (y2 - y1) / h;
+        const mTan = df(a);
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(pad.left, pad.top, geom.plotW, geom.plotH);
+        ctx.clip();
+
+        // difference triangle
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 1.2;
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath();
+        ctx.moveTo(X(x1), Y(y1));
+        ctx.lineTo(X(x2), Y(y1));
+        ctx.lineTo(X(x2), Y(y2));
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // secan line
+        const ext = 1.4;
+        ctx.strokeStyle = '#e6a817';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(X(x1 - ext), Y(y1 - mSec * ext));
+        ctx.lineTo(X(x2 + ext), Y(y2 + mSec * ext));
+        ctx.stroke();
+
+        // tangent line
+        const tExt = 1.5;
+        ctx.strokeStyle = '#0d7377';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([7, 5]);
+        ctx.beginPath();
+        ctx.moveTo(X(a - tExt), Y(y1 - mTan * tExt));
+        ctx.lineTo(X(a + tExt), Y(y1 + mTan * tExt));
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.restore();
+
+        // points
+        ctx.fillStyle = '#e6a817';
+        ctx.beginPath();
+        ctx.arc(X(x2), Y(y2), 5.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = '#0d7377';
+        ctx.beginPath();
+        ctx.arc(X(x1), Y(y1), 6, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // labels
+        ctx.fillStyle = '#0d7377';
+        ctx.font = '600 12px Inter, sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText('A', X(x1) - 10, Y(y1) - 8);
+        ctx.fillStyle = '#b98600';
+        ctx.textAlign = 'left';
+        ctx.fillText('B', X(x2) + 9, Y(y2) - 8);
+
+        // readouts
+        const hTxt = h.toFixed(2);
+        pointLabel.textContent = 'x = ' + a.toFixed(1);
+        hLabel.textContent = 'h = ' + hTxt;
+        secanSlope.textContent = mSec.toFixed(2);
+        tangentSlope.textContent = mTan.toFixed(2);
+        readout.textContent = mTan.toFixed(2);
+    }
+
+    pointSlider.addEventListener('input', draw);
+    hSlider.addEventListener('input', draw);
+    if ('ResizeObserver' in window) {
+        new ResizeObserver(draw).observe(canvas);
+    } else {
+        window.addEventListener('resize', draw);
+    }
+    requestAnimationFrame(draw);
+})();
+
+/* ============================================================
+   2. (lihat simulator garis singgung pada bagian 1)
+   ============================================================ */
+
+/* ============================================================
+   3. FORMULA MARKING
+   ============================================================ */
+(function () {
+    document.querySelectorAll('[data-formula]').forEach(function (item) {
+        item.addEventListener('click', function () {
+            if (this.dataset.marked === 'true') {
+                this.style.background = '';
+                this.style.borderColor = '';
+                this.dataset.marked = 'false';
+                this.querySelector('.label').style.color = '';
+            } else {
+                this.style.background = '#e6f7f6';
+                this.style.borderColor = '#0d7377';
+                this.dataset.marked = 'true';
+                this.querySelector('.label').style.color = '#0d7377';
+            }
+        });
+    });
+})();
+
+/* ============================================================
+   4. MONOTONICITY VISUALIZER
+   ============================================================ */
+(function () {
+    const canvas = document.getElementById('monoCanvas');
+    if (!canvas) return;
+    const select = document.getElementById('monoSelect');
+    const readout = document.getElementById('monoReadout');
+    const note = document.getElementById('monoNote');
+
+    const presets = [
+        {
+            label: 'f(x) = x² − 4x + 3',
+            f: x => x * x - 4 * x + 3,
+            df: x => 2 * x - 4,
+            xMin: -1, xMax: 5, yMin: -3, yMax: 10,
+            stat: [2],
+            note: 'Turun pada x < 2, naik pada x > 2. Titik stasioner (2, −1) adalah minimum.',
+            chips: ['turun: x < 2', 'naik: x > 2', 'minimum (2, −1)']
+        },
+        {
+            label: 'f(x) = x³ − 3x',
+            f: x => x * x * x - 3 * x,
+            df: x => 3 * x * x - 3,
+            xMin: -2.6, xMax: 2.6, yMin: -4, yMax: 4,
+            stat: [-1, 1],
+            note: 'Naik pada x < −1 atau x > 1, turun pada −1 < x < 1. Maksimum (−1, 2), minimum (1, −2).',
+            chips: ['naik: x < −1', 'turun: −1 < x < 1', 'naik: x > 1']
+        },
+        {
+            label: 'f(x) = −x³ + 3x²',
+            f: x => -x * x * x + 3 * x * x,
+            df: x => -3 * x * x + 6 * x,
+            xMin: -1, xMax: 3.6, yMin: -2, yMax: 6.5,
+            stat: [0, 2],
+            note: 'Turun pada x < 0 atau x > 2, naik pada 0 < x < 2. Minimum (0, 0), maksimum (2, 4).',
+            chips: ['turun: x < 0', 'naik: 0 < x < 2', 'turun: x > 2']
+        }
+    ];
+
+    function draw() {
+        const preset = presets[parseInt(select.value, 10)] || presets[0];
+        const p = prepareCanvas(canvas, 330 / 480);
+        const ctx = p.ctx;
+        const geom = drawAxes(ctx, preset, p.W, p.H);
+        const { X, Y, pad } = geom;
+
+        // color curve by sign of derivative, using small segments
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(pad.left, pad.top, geom.plotW, geom.plotH);
+        ctx.clip();
+        const N = 320;
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        for (let i = 0; i < N; i++) {
+            const x1 = preset.xMin + (i / N) * (preset.xMax - preset.xMin);
+            const x2 = preset.xMin + ((i + 1) / N) * (preset.xMax - preset.xMin);
+            const y1 = preset.f(x1), y2 = preset.f(x2);
+            if (!isFinite(y1) || !isFinite(y2)) continue;
+            const slope = preset.df((x1 + x2) / 2);
+            ctx.strokeStyle = slope > 0.001 ? '#0d7377' : (slope < -0.001 ? '#dc2626' : '#e6a817');
+            ctx.beginPath();
+            ctx.moveTo(X(x1), Y(y1));
+            ctx.lineTo(X(x2), Y(y2));
+            ctx.stroke();
+        }
+        ctx.restore();
+
+        // stationary points
+        preset.stat.forEach(function (x) {
+            const y = preset.f(x);
+            ctx.fillStyle = '#e6a817';
+            ctx.beginPath();
+            ctx.arc(X(x), Y(y), 5.5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.fillStyle = '#8a5b00';
+            ctx.font = '600 11px Inter, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('(' + fmt(x) + ', ' + fmt(y) + ')', X(x), Y(y) - 12);
+        });
+
+        readout.innerHTML = preset.chips.map(function (c) {
+            return '<span class="readout-chip">' + c + '</span>';
+        }).join('');
+        note.textContent = preset.note;
+    }
+
+    select.addEventListener('change', draw);
+    if ('ResizeObserver' in window) {
+        new ResizeObserver(draw).observe(canvas);
+    } else {
+        window.addEventListener('resize', draw);
+    }
+    requestAnimationFrame(draw);
+})();
+
+/* ============================================================
+   5. POLYNOMIAL DERIVATIVE CALCULATOR
+   ============================================================ */
+(function () {
+    const input = document.getElementById('polyInput');
+    const btn = document.getElementById('polyBtn');
+    const out = document.getElementById('polyOut');
+    if (!input || !btn || !out) return;
+
+    function parsePoly(str) {
+        let s = String(str).replace(/\s+/g, '').toLowerCase();
+        if (!s) return null;
+        s = s.replace(/-/g, '+-');
+        const parts = s.split('+').filter(function (t) { return t !== ''; });
+        if (!parts.length) return null;
+        const map = new Map();
+        for (let i = 0; i < parts.length; i++) {
+            const t = parts[i];
+            let m = t.match(/^(-?\d*\.?\d*)\*?x(?:\^(-?\d+))?$/);
+            if (m) {
+                let c = m[1];
+                if (c === '' || c === '+') c = 1;
+                else if (c === '-') c = -1;
+                else c = parseFloat(c);
+                if (isNaN(c)) return null;
+                let p = m[2] === undefined ? 1 : parseInt(m[2], 10);
+                if (p < 0 || !isFinite(p)) return null;
+                map.set(p, (map.get(p) || 0) + c);
+            } else {
+                const c = parseFloat(t);
+                if (isNaN(c) || !isFinite(c)) return null;
+                map.set(0, (map.get(0) || 0) + c);
+            }
+        }
+        return map;
+    }
+
+    function numStr(n) {
+        return String(n).replace('-', '−');
+    }
+
+    function termHTML(c, p) {
+        if (p === 0) return numStr(c);
+        let coef = '';
+        if (c === 1) coef = '';
+        else if (c === -1) coef = '−';
+        else coef = numStr(c);
+        return coef + 'x' + (p === 1 ? '' : '<sup>' + p + '</sup>');
+    }
+
+    function polyHTML(map) {
+        const powers = Array.from(map.keys())
+            .filter(function (p) { return Math.abs(map.get(p)) > 1e-12; })
+            .sort(function (a, b) { return b - a; });
+        if (!powers.length) return '0';
+        return powers.map(function (p, i) {
+            const c = map.get(p);
+            const body = termHTML(Math.abs(c), p);
+            if (i === 0) return (c < 0 ? '−' : '') + body;
+            return (c < 0 ? ' − ' : ' + ') + body;
+        }).join('');
+    }
+
+    function render(playSound) {
+        const map = parsePoly(input.value);
+        if (!map) {
+            out.innerHTML = '<span class="err">Format belum dikenali. Contoh yang benar: ' +
+                '3x^4 - 2x^2 + 5x - 7 (pangkat bulat tak negatif).</span>';
+            if (playSound) Sound.play('nudge');
+            return;
+        }
+
+        const powers = Array.from(map.keys()).sort(function (a, b) { return b - a; });
+        const rows = [];
+        powers.forEach(function (p) {
+            const c = map.get(p);
+            if (Math.abs(c) < 1e-12) return;
+            if (p === 0) {
+                rows.push('d/dx (' + termHTML(c, 0) + ') = <span>0</span>');
+            } else if (p === 1) {
+                rows.push('d/dx (' + termHTML(c, 1) + ') = <span>' + termHTML(c, 0) + '</span>');
+            } else {
+                const sign = c < 0 ? '−' : '';
+                const power = p - 1;
+                const exp = power <= 1 ? '' : '<sup>' + power + '</sup>';
+                const mid = sign + Math.abs(c) + '·' + p + 'x' + exp;
+                rows.push('d/dx (' + termHTML(c, p) + ') = ' + mid +
+                    ' = <span>' + termHTML(c * p, p - 1) + '</span>');
+            }
+        });
+
+        const dMap = new Map();
+        map.forEach(function (c, p) {
+            if (p > 0) dMap.set(p - 1, (dMap.get(p - 1) || 0) + c * p);
+        });
+
+        out.innerHTML =
+            '<div class="calc-steps">' +
+                'f(x) = ' + polyHTML(map) + '<br>' +
+                rows.join('<br>') +
+            '</div>' +
+            '<div class="final">f\'(x) = ' + polyHTML(dMap) + '</div>';
+        if (playSound) Sound.play('calc');
+    }
+
+    btn.addEventListener('click', function () { render(true); });
+    input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') render(true);
+    });
+    document.querySelectorAll('[data-sample]').forEach(function (chip) {
+        chip.addEventListener('click', function () {
+            input.value = this.dataset.sample;
+            render(true);
+        });
+    });
+    render(false);
+})();
+
+/* ============================================================
+   6. QUIZ
+   ============================================================ */
+(function () {
+    const questions = [
+        {
+            q: "Turunan dari f(x) = 5 adalah…",
+            options: ["0", "5", "5x", "x"],
+            correct: 0,
+            explanation: "Turunan fungsi konstan selalu 0."
+        },
+        {
+            q: "Turunan dari f(x) = 4x³ adalah…",
+            options: ["4x²", "12x²", "12x³", "4x³"],
+            correct: 1,
+            explanation: "Aturan pangkat: 4 · 3 · x³⁻¹ = 12x²."
+        },
+        {
+            q: "Turunan dari f(x) = x⁵ + 2x adalah…",
+            options: ["5x⁴ + 2", "5x⁴ + 2x", "x⁴ + 2", "5x⁵ + 2"],
+            correct: 0,
+            explanation: "Turunkan per suku: x⁵ → 5x⁴ dan 2x → 2."
+        },
+        {
+            q: "Jika f(x) = (2x + 1)⁴, maka f'(x) = …",
+            options: ["4(2x + 1)³", "8(2x + 1)³", "2(2x + 1)³", "8(2x + 1)⁴"],
+            correct: 1,
+            explanation: "Aturan rantai: 4(2x + 1)³ · 2 = 8(2x + 1)³."
+        },
+        {
+            q: "Turunan dari f(x) = x²(3x + 1) adalah…",
+            options: ["6x² + 2x", "9x² + 2x", "6x + 1", "3x² + 2x"],
+            correct: 1,
+            explanation: "u'v + uv' = 2x(3x + 1) + x²(3) = 6x² + 2x + 3x² = 9x² + 2x."
+        },
+        {
+            q: "Turunan dari f(x) = (3x − 1)/(x + 2) adalah…",
+            options: ["7/(x + 2)²", "5/(x + 2)²", "7/(x + 2)", "−7/(x + 2)²"],
+            correct: 0,
+            explanation: "[3(x + 2) − (3x − 1)]/(x + 2)² = (3x + 6 − 3x + 1)/(x + 2)² = 7/(x + 2)²."
+        },
+        {
+            q: "Turunan dari f(x) = √x adalah…",
+            options: ["1/(2√x)", "2√x", "1/√x", "√x/2"],
+            correct: 0,
+            explanation: "√x = x^(1/2), sehingga f'(x) = ½x^(−1/2) = 1/(2√x)."
+        },
+        {
+            q: "Turunan dari f(x) = 1/x² adalah…",
+            options: ["−2/x³", "2/x³", "−1/x³", "−2/x"],
+            correct: 0,
+            explanation: "1/x² = x⁻², turunannya −2x⁻³ = −2/x³."
+        },
+        {
+            q: "Fungsi f(x) = x³ − 3x turun pada interval…",
+            options: ["x < −1", "−1 < x < 1", "x > 1", "x < −1 atau x > 1"],
+            correct: 1,
+            explanation: "f'(x) = 3x² − 3 = 3(x − 1)(x + 1). Bertanda negatif saat −1 < x < 1."
+        },
+        {
+            q: "Fungsi f(x) = x² − 4x + 3 memiliki titik stasioner di x = …",
+            options: ["1", "2", "3", "4"],
+            correct: 1,
+            explanation: "f'(x) = 2x − 4 = 0 → x = 2."
+        },
+        {
+            q: "Gradien garis singgung f(x) = x² di x = 3 adalah…",
+            options: ["3", "6", "9", "12"],
+            correct: 1,
+            explanation: "f'(x) = 2x, sehingga f'(3) = 6. Persamaan garisnya y = 6x − 9."
+        },
+        {
+            q: "s(t) = t³ − 6t² + 9t. Kecepatan benda nol pada saat t = …",
+            options: ["1 dan 3", "0 dan 3", "2", "1 dan 2"],
+            correct: 0,
+            explanation: "v(t) = 3t² − 12t + 9 = 3(t − 1)(t − 3), jadi v = 0 saat t = 1 dan t = 3."
+        }
+    ];
+
+    let currentIndex = 0;
+    let selectedOption = null;
+    let answered = false;
+    let score = 0;
+    let finished = false;
+
+    const questionEl = document.getElementById('quizQuestion');
+    const optionsEl = document.getElementById('quizOptions');
+    const feedbackEl = document.getElementById('quizFeedback');
+    const progressEl = document.getElementById('quizProgress');
+    const barEl = document.getElementById('quizBar');
+    const checkBtn = document.getElementById('quizCheck');
+    const nextBtn = document.getElementById('quizNext');
+
+    function updateBar() {
+        const done = currentIndex + (answered ? 1 : 0);
+        barEl.style.width = (done / questions.length) * 100 + '%';
+    }
+
+    function renderQuestion() {
+        const q = questions[currentIndex];
+        questionEl.textContent = q.q;
+        optionsEl.innerHTML = '';
+        selectedOption = null;
+        answered = false;
+        feedbackEl.className = 'quiz-feedback';
+        feedbackEl.textContent = '';
+        checkBtn.style.display = 'none';
+        checkBtn.disabled = true;
+        nextBtn.style.display = '';
+        nextBtn.disabled = true;
+        nextBtn.textContent = currentIndex === questions.length - 1 ? 'Lihat Hasil →' : 'Soal Berikutnya →';
+
+        const letters = ['A', 'B', 'C', 'D'];
+        q.options.forEach(function (opt, i) {
+            const b = document.createElement('button');
+            b.className = 'quiz-option';
+            b.type = 'button';
+            const marker = document.createElement('span');
+            marker.className = 'marker';
+            marker.textContent = letters[i];
+            const text = document.createElement('span');
+            text.textContent = opt;
+            b.appendChild(marker);
+            b.appendChild(text);
+            b.addEventListener('click', function () {
+                if (answered) return;
+                Sound.play('select');
+                Array.prototype.forEach.call(optionsEl.children, function (el) {
+                    el.classList.remove('selected');
+                });
+                b.classList.add('selected');
+                selectedOption = i;
+                checkBtn.style.display = 'inline-flex';
+                checkBtn.disabled = false;
+            });
+            optionsEl.appendChild(b);
+        });
+
+        progressEl.textContent = 'Soal ' + (currentIndex + 1) + ' dari ' + questions.length +
+            ' · skor ' + score;
+        updateBar();
+    }
+
+    function checkAnswer() {
+        if (answered || selectedOption === null) return;
+        answered = true;
+        const q = questions[currentIndex];
+        const buttons = optionsEl.children;
+
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].classList.remove('selected');
+            if (i === q.correct) {
+                buttons[i].classList.add('correct');
+                buttons[i].querySelector('.marker').textContent = '✓';
+            } else if (i === selectedOption) {
+                buttons[i].classList.add('incorrect');
+                buttons[i].querySelector('.marker').textContent = '✗';
+            }
+        }
+
+        const isCorrect = selectedOption === q.correct;
+        if (isCorrect) score++;
+        Sound.play(isCorrect ? 'correct' : 'wrong');
+        feedbackEl.className = 'quiz-feedback show ' + (isCorrect ? 'success' : 'error');
+        feedbackEl.textContent = (isCorrect ? '✓ Benar! ' : '✗ Belum tepat. ') + q.explanation;
+
+        checkBtn.style.display = 'none';
+        nextBtn.disabled = false;
+        progressEl.textContent = 'Soal ' + (currentIndex + 1) + ' dari ' + questions.length +
+            ' · skor ' + score;
+        updateBar();
+    }
+
+    function showResult() {
+        const percent = Math.round((score / questions.length) * 100);
+        let message;
+        if (percent >= 90) message = 'Luar biasa! Pemahaman Anda sudah sangat kuat.';
+        else if (percent >= 75) message = 'Bagus! Tinggal rapikan beberapa bagian yang masih goyah.';
+        else if (percent >= 50) message = 'Cukup baik. Ulangi bagian aturan turunan dan penerapannya.';
+        else message = 'Jangan menyerah. Baca ulang konsep dan contoh bertahap, lalu coba lagi.';
+
+        questionEl.textContent = 'Kuis selesai';
+        optionsEl.innerHTML =
+            '<div class="quiz-result">' +
+                '<div class="score">' + percent + '<small>%</small></div>' +
+                '<p class="small text-muted">' + score + ' benar dari ' + questions.length + ' soal</p>' +
+                '<p class="small">' + message + '</p>' +
+            '</div>';
+        feedbackEl.className = 'quiz-feedback';
+        feedbackEl.textContent = '';
+        progressEl.textContent = '';
+        barEl.style.width = '100%';
+        checkBtn.style.display = 'none';
+
+        nextBtn.textContent = 'Ulangi Kuis ↻';
+        nextBtn.disabled = false;
+        nextBtn.style.display = '';
+        finished = true;
+        Sound.play(percent >= 75 ? 'finish' : 'complete');
+    }
+
+    function nextQuestion() {
+        if (currentIndex < questions.length - 1) {
+            currentIndex++;
+            renderQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function restart() {
+        currentIndex = 0;
+        score = 0;
+        finished = false;
+        renderQuestion();
+    }
+
+    checkBtn.addEventListener('click', checkAnswer);
+    nextBtn.addEventListener('click', function () {
+        Sound.play('tick');
+        if (finished) restart();
+        else nextQuestion();
+    });
+    renderQuestion();
+})();
+
+/* ============================================================
+   7. SCROLL SPY
+   ============================================================ */
+(function () {
+    const links = Array.prototype.slice.call(document.querySelectorAll('.subnav-links a'));
+    const sections = links.map(function (a) {
+        return document.querySelector(a.getAttribute('href'));
+    }).filter(Boolean);
+    if (!sections.length || !('IntersectionObserver' in window)) return;
+
+    const linksEl = document.querySelector('.subnav-links');
+    const scrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ? 'auto'
+        : 'smooth';
+
+    function updateEdge() {
+        if (!linksEl) return;
+        linksEl.classList.toggle('at-start', linksEl.scrollLeft <= 2);
+        linksEl.classList.toggle(
+            'at-end',
+            linksEl.scrollLeft + linksEl.clientWidth >= linksEl.scrollWidth - 2
+        );
+    }
+
+    function revealLink(a) {
+        if (!a || !linksEl) return;
+        const box = linksEl.getBoundingClientRect();
+        const r = a.getBoundingClientRect();
+        const pad = 20;
+        if (r.left < box.left + pad) {
+            linksEl.scrollBy({ left: r.left - box.left - pad, behavior: scrollBehavior });
+        } else if (r.right > box.right - pad) {
+            linksEl.scrollBy({ left: r.right - box.right + pad, behavior: scrollBehavior });
+        }
+    }
+
+    const observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            let current = null;
+            links.forEach(function (a) {
+                const on = a.getAttribute('href') === '#' + entry.target.id;
+                a.classList.toggle('active', on);
+                if (on) current = a;
+            });
+            revealLink(current);
+        });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+    if (linksEl) {
+        linksEl.addEventListener('scroll', updateEdge, { passive: true });
+        linksEl.addEventListener('focusin', function (e) {
+            const a = e.target.closest && e.target.closest('a');
+            if (a) revealLink(a);
+        });
+        window.addEventListener('resize', updateEdge);
+        updateEdge();
+    }
+
+    sections.forEach(function (s) { observer.observe(s); });
+})();
+
+/* ============================================================
+   8. ISTILAH INTERAKTIF (KAMUS KLIK)
+   ============================================================ */
+(function () {
+    const GLOSSARY = [
+        {
+            term: 'aproksimasi',
+            title: 'Aproksimasi',
+            def: 'Perkiraan yang cukup dekat dengan nilai sebenarnya. Bukan nilai persis, tetapi cukup akurat untuk dipakai.',
+            contoh: 'Karena √2 = 1,414213… tidak berhenti, kita sering memakai 1,414 sebagai aproksimasi.'
+        },
+        {
+            term: 'secan',
+            title: 'Garis secan',
+            def: 'Garis lurus yang memotong kurva di dua titik. Dari gradien garis secan inilah turunan didefinisikan.',
+            contoh: 'Garis AB pada simulasi di bagian Konsep adalah garis secan.'
+        },
+        {
+            term: 'garis singgung',
+            title: 'Garis singgung (tangen)',
+            def: 'Garis yang menyentuh kurva di satu titik dan arahnya sama dengan kurva di titik itu. Kemiringannya sama dengan nilai turunan di titik tersebut.',
+            contoh: 'Di x = 1 pada f(x) = x², garis singgungnya punya gradien 2.'
+        },
+        {
+            term: 'tangen',
+            title: 'Garis tangen',
+            def: 'Sebutan lain untuk garis singgung: garis yang menyentuh kurva di satu titik dan mengikuti arah kurva di titik itu.',
+            contoh: 'Gradien tangen di x = 3 pada f(x) = x² adalah 6.'
+        },
+        {
+            term: 'limit',
+            title: 'Limit',
+            def: 'Nilai yang didekati suatu ungkapan ketika variabelnya mendekati angka tertentu. Variabelnya tidak harus benar-benar sampai ke angka itu.',
+            contoh: 'Saat h mendekati 0, nilai 2x + h mendekati 2x. Itulah limitnya.'
+        },
+        {
+            term: 'diferensial',
+            title: 'Diferensial',
+            def: 'Istilah lain untuk turunan, atau proses mencari turunan suatu fungsi.',
+            contoh: 'Mendiferensialkan f(x) = x² menghasilkan f′(x) = 2x.'
+        },
+        {
+            term: 'gradien',
+            title: 'Gradien',
+            def: 'Ukuran kemiringan garis: seberapa besar y berubah setiap kali x bertambah 1.',
+            contoh: 'Gradien 2 berarti setiap x naik 1, y naik 2.'
+        },
+        {
+            term: 'stasioner',
+            title: 'Titik stasioner',
+            def: 'Titik saat f′(x) = 0, sehingga grafik berhenti naik atau turun untuk sesaat. Bisa berupa puncak, lembah, atau titik belok.',
+            contoh: 'f(x) = x² − 4x + 3 punya titik stasioner di x = 2.'
+        },
+        {
+            term: 'maksimum lokal',
+            title: 'Maksimum lokal',
+            def: 'Nilai tertinggi di sekitar titik itu, tetapi belum tentu tertinggi di seluruh grafik.',
+            contoh: 'Seperti puncak bukit kecil — tinggi di sekitarnya, belum tentu puncak gunung tertinggi.'
+        },
+        {
+            term: 'minimum lokal',
+            title: 'Minimum lokal',
+            def: 'Nilai terendah di sekitar titik itu, tetapi belum tentu terendah di seluruh grafik.',
+            contoh: 'Seperti lembah kecil — paling rendah di sekitarnya, belum tentu paling rendah di seluruh wilayah.'
+        },
+        {
+            term: 'titik belok',
+            title: 'Titik belok',
+            def: 'Titik tempat grafik berubah dari melengkung ke atas menjadi melengkung ke bawah (atau sebaliknya). Bukan puncak dan bukan lembah.',
+            contoh: 'Grafik f(x) = x³ berubah kecekungan di (0, 0).'
+        },
+        {
+            term: 'polinomial',
+            title: 'Polinomial',
+            def: 'Fungsi yang tersusun dari suku-suku berpangkat bilangan bulat tak negatif, dengan koefisien berupa angka.',
+            contoh: '3x⁴ − 2x² + 5x − 7 adalah polinomial.'
+        },
+        {
+            term: 'koefisien',
+            title: 'Koefisien',
+            def: 'Angka yang mengalikan variabel pada suatu suku.',
+            contoh: 'Pada suku 3x⁴, koefisiennya adalah 3.'
+        },
+        {
+            term: 'variabel',
+            title: 'Variabel',
+            def: 'Lambang yang mewakili nilai yang bisa berubah, biasanya x atau t.',
+            contoh: 'Pada f(x) = x², huruf x adalah variabel.'
+        },
+        {
+            term: 'substitusi',
+            title: 'Substitusi',
+            def: 'Mengganti variabel dengan nilai atau ungkapan tertentu, lalu menghitung hasilnya.',
+            contoh: 'Substitusi x = 3 ke f′(x) = 2x − 4 menghasilkan f′(3) = 2.'
+        },
+        {
+            term: 'kinematika',
+            title: 'Kinematika',
+            def: 'Cabang fisika yang membahas gerak benda: posisi, kecepatan, dan percepatan — tanpa membahas penyebab geraknya.',
+            contoh: 's(t) = posisi, v(t) = s′(t) = kecepatan, a(t) = v′(t) = percepatan.'
+        },
+        {
+            term: 'biaya marginal',
+            title: 'Biaya marginal',
+            def: 'Perkiraan tambahan biaya untuk memproduksi satu unit lagi.',
+            contoh: 'Jika C′(10) = 44, unit ke-11 menambah biaya sekitar 44 ribu rupiah.'
+        },
+        {
+            term: 'interval',
+            title: 'Interval',
+            def: 'Rentang nilai di antara dua batas.',
+            contoh: 'Interval −1 < x < 1 memuat semua bilangan antara −1 dan 1.'
+        },
+        {
+            term: 'laju perubahan',
+            title: 'Laju perubahan',
+            def: 'Seberapa cepat suatu nilai berubah dibandingkan perubahan variabel lain.',
+            contoh: 'Kecepatan adalah laju perubahan posisi terhadap waktu.'
+        },
+        {
+            term: 'konstanta',
+            title: 'Konstanta',
+            def: 'Nilai tetap yang tidak ikut berubah ketika variabel berubah.',
+            contoh: 'Pada 5x + 7, angka 7 adalah konstanta.'
+        },
+        {
+            term: 'notasi',
+            title: 'Notasi',
+            def: 'Cara menuliskan sesuatu dengan lambang agar singkat dan tepat.',
+            contoh: 'f′(x) dan dy/dx adalah dua notasi untuk turunan.'
+        }
+    ];
+
+    const caps = { 'secan': 2, 'garis singgung': 2, 'limit': 2, 'gradien': 2 };
+    const items = GLOSSARY.map(function (g) {
+        return {
+            term: g.term,
+            title: g.title,
+            def: g.def,
+            contoh: g.contoh,
+            cap: caps[g.term] || 1,
+            used: 0
+        };
+    }).sort(function (a, b) { return b.term.length - a.term.length; });
+
+    const SKIP = '.istilah, .istilah-pop, .expr-block, .m, .step-tag, .cheat, .glossary, ' +
+        '.quiz-card, .subnav, .footer, summary, h1, h2, .hero-badge, .hero-stats, ' +
+        '.hero-tip, .legend, .btn, .pill, .formula-item .label, .calc-out, .readout, ' +
+        '.slope-readout, output, code, pre, textarea, input, select, option, canvas, svg';
+    const LETTER = /[A-Za-zÀ-ÖØ-öø-ÿ]/;
+
+    /* ----- popover element ----- */
+    const pop = document.createElement('div');
+    pop.className = 'istilah-pop';
+    pop.id = 'istilahPop';
+    pop.hidden = true;
+    pop.setAttribute('role', 'dialog');
+    pop.setAttribute('aria-labelledby', 'istilahTitle');
+    pop.tabIndex = -1;
+    pop.innerHTML =
+        '<button type="button" class="istilah-close" aria-label="Tutup penjelasan">×</button>' +
+        '<h4 id="istilahTitle"></h4>' +
+        '<p class="istilah-def"></p>' +
+        '<p class="contoh istilah-contoh"></p>';
+    document.body.appendChild(pop);
+
+    const titleEl = pop.querySelector('#istilahTitle');
+    const defEl = pop.querySelector('.istilah-def');
+    const contohEl = pop.querySelector('.istilah-contoh');
+    const closeBtn = pop.querySelector('.istilah-close');
+    let activeTerm = null;
+
+    function positionPop(termBtn) {
+        if (window.matchMedia('(max-width: 640px)').matches) {
+            pop.classList.add('is-sheet');
+            pop.classList.remove('is-above', 'is-below');
+            pop.style.left = '';
+            pop.style.top = '';
+            pop.style.right = '';
+            pop.style.bottom = '';
+            return;
+        }
+        pop.classList.remove('is-sheet');
+        const r = termBtn.getBoundingClientRect();
+        const pr = pop.getBoundingClientRect();
+        const gap = 12;
+        let place = 'above';
+        let top = r.top - pr.height - gap;
+        if (top < 8) {
+            top = r.bottom + gap;
+            place = 'below';
+        }
+        let left = r.left + r.width / 2 - pr.width / 2;
+        left = Math.max(12, Math.min(left, window.innerWidth - pr.width - 12));
+        const arrow = Math.max(16, Math.min(pr.width - 16, r.left + r.width / 2 - left));
+        pop.classList.toggle('is-above', place === 'above');
+        pop.classList.toggle('is-below', place === 'below');
+        pop.style.top = Math.max(8, top) + 'px';
+        pop.style.left = left + 'px';
+        pop.style.setProperty('--arrow', arrow + 'px');
+    }
+
+    function closePop(returnFocus, silent) {
+        if (!activeTerm) {
+            pop.hidden = true;
+            return;
+        }
+        const term = activeTerm;
+        activeTerm = null;
+        term.setAttribute('aria-expanded', 'false');
+        pop.hidden = true;
+        if (!silent) Sound.play('close');
+        if (returnFocus) term.focus({ preventScroll: true });
+    }
+
+    function openPop(termBtn, item) {
+        if (activeTerm === termBtn) {
+            closePop(true);
+            return;
+        }
+        closePop(false, true);
+        activeTerm = termBtn;
+        termBtn.setAttribute('aria-expanded', 'true');
+        titleEl.textContent = item.title;
+        defEl.textContent = item.def;
+        contohEl.innerHTML = '<strong>Contoh:</strong> ' + item.contoh;
+        pop.hidden = false;
+        pop.style.visibility = 'hidden';
+        positionPop(termBtn);
+        pop.style.visibility = 'visible';
+        pop.focus({ preventScroll: true });
+        Sound.play('pop');
+    }
+
+    closeBtn.addEventListener('click', function () { closePop(true); });
+    document.addEventListener('click', function (e) {
+        if (e.target.closest('.istilah') || e.target.closest('.istilah-pop')) return;
+        if (activeTerm) closePop(false);
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && activeTerm) closePop(true);
+    });
+    window.addEventListener('resize', function () {
+        if (activeTerm) closePop(false, true);
+    });
+    window.addEventListener('scroll', function () {
+        if (activeTerm) closePop(false, true);
+    }, { passive: true, capture: true });
+
+    /* ----- text matching ----- */
+    function isLetter(ch) {
+        return !!ch && LETTER.test(ch);
+    }
+
+    function findTerm(text, term) {
+        const lower = text.toLowerCase();
+        const needle = term.toLowerCase();
+        let from = 0;
+        while (true) {
+            const i = lower.indexOf(needle, from);
+            if (i < 0) return null;
+            const before = i > 0 ? text[i - 1] : '';
+            if (!isLetter(before)) {
+                let end = i + term.length;
+                const suffix = text.slice(end).match(/^(nya|an|kan)/i);
+                if (suffix) end += suffix[0].length;
+                const after = text[end];
+                if (!after || !isLetter(after)) {
+                    return { index: i, word: text.slice(i, end) };
+                }
+            }
+            from = i + 1;
+        }
+    }
+
+    function makeTermButton(word, item) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'istilah';
+        btn.textContent = word;
+        btn.dataset.term = item.term;
+        btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-controls', 'istilahPop');
+        btn.addEventListener('click', function () {
+            openPop(btn, item);
+        });
+        return btn;
+    }
+
+    function annotateNode(textNode) {
+        let node = textNode;
+        let parent = node.parentElement;
+        if (!parent || parent.closest(SKIP)) return;
+        let rest = node.nodeValue;
+        if (!rest || !rest.trim()) return;
+
+        while (rest) {
+            let best = null;
+            for (let k = 0; k < items.length; k++) {
+                const item = items[k];
+                if (item.used >= item.cap) continue;
+                const m = findTerm(rest, item.term);
+                if (!m) continue;
+                if (!best || m.index < best.index ||
+                    (m.index === best.index && m.word.length > best.word.length)) {
+                    best = { index: m.index, word: m.word, item: item };
+                }
+            }
+            if (!best) break;
+
+            const before = rest.slice(0, best.index);
+            const after = rest.slice(best.index + best.word.length);
+            const frag = document.createDocumentFragment();
+            if (before) frag.appendChild(document.createTextNode(before));
+            frag.appendChild(makeTermButton(best.word, best.item));
+            parent.insertBefore(frag, node);
+            const afterNode = document.createTextNode(after);
+            parent.insertBefore(afterNode, node);
+            parent.removeChild(node);
+            best.item.used++;
+
+            node = afterNode;
+            parent = afterNode.parentElement;
+            rest = after;
+        }
+    }
+
+    const roots = [document.querySelector('.hero'), document.querySelector('main')].filter(Boolean);
+    roots.forEach(function (root) {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+            acceptNode: function (node) {
+                if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+                const p = node.parentElement;
+                if (!p || p.closest(SKIP)) return NodeFilter.FILTER_REJECT;
+                if (p.closest('a')) return NodeFilter.FILTER_REJECT;
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        });
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach(annotateNode);
+    });
+})();
+</script>
+</body>
+</html>
